@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daftar — Buat Toko Online Anda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --neon-blue: #00D4FF;
+  --neon-purple: #BF00FF;
+  --neon-green: #00FF94;
+  --neon-red: #FF4466;
+  --neon-orange: #FF8C00;
+  --bg: #060612;
+  --bg2: #0d0d1f;
+  --bg3: #12122a;
+  --card: rgba(255,255,255,0.04);
+  --card-hover: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --border-active: rgba(0,212,255,0.4);
+  --text: #f0f0ff;
+  --text-dim: #8888aa;
+  --text-muted: #555577;
+  --glow-blue: 0 0 20px rgba(0,212,255,0.3), 0 0 60px rgba(0,212,255,0.1);
+  --glow-green: 0 0 20px rgba(0,255,148,0.3);
+  --glow-red: 0 0 20px rgba(255,68,102,0.3);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; }
+
+/* NOISE */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+/* AMBIENT */
+.ambient { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.ambient span {
+  position:absolute; border-radius:50%; filter:blur(120px); opacity:0.08;
+  animation: drift 14s ease-in-out infinite alternate;
+}
+.ambient span:nth-child(1) { width:700px; height:700px; background:var(--neon-blue); top:-300px; left:-200px; animation-delay:0s; }
+.ambient span:nth-child(2) { width:500px; height:500px; background:var(--neon-purple); bottom:-200px; right:-150px; animation-delay:-5s; }
+.ambient span:nth-child(3) { width:350px; height:350px; background:var(--neon-blue); top:50%; left:50%; animation-delay:-9s; }
+
+@keyframes drift {
+  from { transform:translate(0,0) scale(1); }
+  to   { transform:translate(40px,30px) scale(1.1); }
+}
+
+/* LAYOUT */
+.page-wrap {
+  position:relative; z-index:10;
+  min-height:100vh;
+  display:flex; flex-direction:column; align-items:center;
+  padding: 40px 20px 80px;
+}
+
+/* HEADER */
+.top-bar {
+  width:100%; max-width:900px;
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:48px;
+}
+.logo {
+  display:flex; align-items:center; gap:10px; text-decoration:none;
+}
+.logo-icon {
+  width:38px; height:38px; border-radius:10px;
+  background:linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Syne',sans-serif; font-weight:800; font-size:16px; color:#fff;
+  box-shadow:var(--glow-blue);
+}
+.logo-name { font-family:'Syne',sans-serif; font-weight:700; font-size:17px; color:var(--text); }
+.login-link { font-size:14px; color:var(--text-dim); text-decoration:none; }
+.login-link:hover { color:var(--neon-blue); }
+
+/* STEP INDICATOR */
+.step-indicator {
+  width:100%; max-width:560px;
+  display:flex; align-items:center; gap:0;
+  margin-bottom:48px;
+}
+.step-item {
+  display:flex; align-items:center; gap:10px; flex:1;
+}
+.step-item:last-child { flex:none; }
+.step-dot {
+  width:32px; height:32px; border-radius:50%;
+  border:2px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Syne',sans-serif; font-weight:700; font-size:13px;
+  color:var(--text-muted);
+  transition:all 0.3s;
+  flex-shrink:0;
+  position:relative;
+}
+.step-dot.active {
+  border-color:var(--neon-blue);
+  color:var(--neon-blue);
+  box-shadow:var(--glow-blue);
+  background:rgba(0,212,255,0.08);
+}
+.step-dot.done {
+  border-color:var(--neon-green);
+  background:rgba(0,255,148,0.1);
+  color:var(--neon-green);
+}
+.step-dot.done::after { content:'✓'; font-size:14px; }
+.step-label {
+  font-size:12px; color:var(--text-muted); white-space:nowrap;
+  transition:color 0.3s;
+}
+.step-item.active .step-label { color:var(--text-dim); }
+.step-item.done .step-label { color:var(--neon-green); }
+.step-line {
+  flex:1; height:1px; background:var(--border);
+  margin:0 8px; transition:background 0.3s;
+}
+.step-line.done { background:rgba(0,255,148,0.3); }
+
+/* CARD CONTAINER */
+.card {
+  width:100%; max-width:900px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:40px;
+  backdrop-filter:blur(20px);
+  animation:fadeUp 0.4s ease both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.step-title {
+  font-size:22px; font-weight:700; color:var(--text);
+  margin-bottom:6px;
+}
+.step-sub {
+  font-size:14px; color:var(--text-dim);
+  margin-bottom:32px;
+  line-height:1.6;
+}
+.step-sub span { color:var(--neon-blue); }
+
+/* ── STEP 1: PILIH TEMPLATE ── */
+.template-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+  margin-bottom:32px;
+}
+@media(max-width:680px) { .template-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:420px) { .template-grid { grid-template-columns:1fr; } }
+
+.template-card {
+  border:2px solid var(--border);
+  border-radius:14px; overflow:hidden;
+  cursor:pointer;
+  transition:all 0.25s;
+  position:relative;
+}
+.template-card:hover { border-color:rgba(0,212,255,0.25); transform:translateY(-2px); }
+.template-card.selected {
+  border-color:var(--neon-blue);
+  box-shadow:var(--glow-blue);
+}
+.template-thumb {
+  height:130px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:36px;
+  position:relative; overflow:hidden;
+}
+.template-thumb::after {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, transparent 50%, rgba(6,6,18,0.8));
+}
+.t1 { background:linear-gradient(135deg,#0d0d1f,#1a1a3a); }
+.t2 { background:linear-gradient(135deg,#0a1a0a,#0d2a0d); }
+.t3 { background:linear-gradient(135deg,#1a0a0a,#2a0d0d); }
+.t4 { background:linear-gradient(135deg,#1a0a1a,#2a0a2a); }
+.t5 { background:linear-gradient(135deg,#0a1020,#101830); }
+.t6 { background:linear-gradient(135deg,#1a1200,#2a1e00); }
+
+.template-mockup {
+  position:absolute; inset:0; padding:12px;
+  display:flex; flex-direction:column; gap:5px; z-index:1;
+}
+.mock-header { height:12px; border-radius:3px; background:rgba(255,255,255,0.15); width:60%; }
+.mock-hero { height:40px; border-radius:6px; background:rgba(255,255,255,0.08); }
+.mock-cols { display:flex; gap:5px; }
+.mock-col { flex:1; height:28px; border-radius:4px; background:rgba(255,255,255,0.06); }
+.mock-bar { height:8px; border-radius:2px; background:rgba(255,255,255,0.1); width:80%; }
+.mock-accent { background: linear-gradient(90deg,rgba(0,212,255,0.4),rgba(191,0,255,0.4)); }
+.mock-accent2 { background: linear-gradient(90deg,rgba(0,255,148,0.4),rgba(0,180,120,0.4)); }
+.mock-accent3 { background: linear-gradient(90deg,rgba(255,68,102,0.4),rgba(200,40,80,0.4)); }
+.mock-accent4 { background: linear-gradient(90deg,rgba(191,0,255,0.4),rgba(100,0,200,0.4)); }
+.mock-accent5 { background: linear-gradient(90deg,rgba(0,150,255,0.4),rgba(0,80,200,0.4)); }
+.mock-accent6 { background: linear-gradient(90deg,rgba(255,180,0,0.4),rgba(200,120,0,0.4)); }
+
+.template-info { padding:12px 14px; }
+.template-name { font-family:'Syne',sans-serif; font-weight:700; font-size:13px; color:var(--text); }
+.template-tag { font-size:11px; color:var(--text-muted); margin-top:2px; }
+.template-selected-badge {
+  position:absolute; top:10px; right:10px; z-index:2;
+  background:var(--neon-blue); color:#000;
+  border-radius:20px; padding:2px 9px;
+  font-size:11px; font-weight:700; font-family:'Syne',sans-serif;
+  display:none;
+}
+.template-card.selected .template-selected-badge { display:block; }
+
+/* ── STEP 2: SUBDOMAIN ── */
+.subdomain-wrap {
+  display:flex; align-items:center; gap:0;
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid var(--border);
+  border-radius:12px; overflow:hidden;
+  transition:border-color 0.3s;
+  margin-bottom:12px;
+}
+.subdomain-wrap:focus-within { border-color:rgba(0,212,255,0.4); }
+.subdomain-wrap.valid { border-color:rgba(0,255,148,0.5); }
+.subdomain-wrap.invalid { border-color:rgba(255,68,102,0.5); }
+.subdomain-wrap.checking { border-color:rgba(255,140,0,0.5); }
+
+.subdomain-input {
+  flex:1; padding:14px 16px;
+  background:transparent; border:none; outline:none;
+  font-family:'DM Sans',sans-serif; font-size:16px; font-weight:500;
+  color:var(--text);
+  letter-spacing:0.5px;
+}
+.subdomain-input::placeholder { color:var(--text-muted); font-weight:400; }
+.subdomain-suffix {
+  padding:14px 16px; 
+  font-size:15px; color:var(--text-muted);
+  background:rgba(255,255,255,0.03);
+  border-left:1px solid var(--border);
+  white-space:nowrap;
+}
+.subdomain-status {
+  display:flex; align-items:center; gap:8px;
+  font-size:13px; min-height:20px;
+  transition:all 0.3s;
+  padding:0 2px;
+}
+.subdomain-status.available { color:var(--neon-green); }
+.subdomain-status.taken { color:var(--neon-red); }
+.subdomain-status.checking { color:var(--neon-orange); }
+.subdomain-status.hint { color:var(--text-muted); }
+.status-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:currentColor;
+  flex-shrink:0;
+}
+.checking-spin {
+  width:7px; height:7px; border-radius:50%;
+  border:1.5px solid var(--neon-orange);
+  border-top-color:transparent;
+  animation:spin 0.7s linear infinite;
+  flex-shrink:0;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.subdomain-tips {
+  margin-top:16px; padding:14px 16px;
+  background:rgba(0,212,255,0.04);
+  border:1px solid rgba(0,212,255,0.1);
+  border-radius:10px;
+}
+.subdomain-tips p { font-size:12px; color:var(--text-muted); margin-bottom:4px; }
+.subdomain-tips p:last-child { margin-bottom:0; }
+.subdomain-tips strong { color:var(--text-dim); }
+
+/* ── STEP 3: FORM DATA DIRI ── */
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:4px; }
+@media(max-width:560px) { .form-grid { grid-template-columns:1fr; } }
+
+.form-group { display:flex; flex-direction:column; gap:7px; }
+.form-group.full { grid-column:1/-1; }
+
+.form-label {
+  font-size:12px; font-weight:600; color:var(--text-dim);
+  text-transform:uppercase; letter-spacing:0.8px;
+}
+.form-label span { color:var(--neon-blue); margin-left:2px; }
+
+.form-input {
+  padding:13px 16px;
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid var(--border);
+  border-radius:10px; outline:none;
+  font-family:'DM Sans',sans-serif; font-size:15px;
+  color:var(--text);
+  transition:border-color 0.25s, box-shadow 0.25s;
+}
+.form-input::placeholder { color:var(--text-muted); }
+.form-input:focus {
+  border-color:rgba(0,212,255,0.4);
+  box-shadow:0 0 0 3px rgba(0,212,255,0.06);
+}
+.form-input.error { border-color:rgba(255,68,102,0.5); }
+
+.phone-wrap { display:flex; gap:0; }
+.phone-flag {
+  padding:13px 14px;
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid var(--border);
+  border-right:none;
+  border-radius:10px 0 0 10px;
+  font-size:15px; color:var(--text-dim);
+  display:flex; align-items:center; gap:6px;
+  white-space:nowrap; user-select:none;
+}
+.phone-input {
+  flex:1; padding:13px 16px;
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid var(--border);
+  border-left:none;
+  border-radius:0 10px 10px 0;
+  outline:none;
+  font-family:'DM Sans',sans-serif; font-size:15px;
+  color:var(--text);
+  transition:border-color 0.25s, box-shadow 0.25s;
+}
+.phone-input::placeholder { color:var(--text-muted); }
+.phone-input:focus {
+  border-color:rgba(0,212,255,0.4);
+  box-shadow:0 0 0 3px rgba(0,212,255,0.06);
+}
+
+.form-note {
+  font-size:12px; color:var(--text-muted);
+  display:flex; align-items:center; gap:6px;
+}
+.form-note svg { flex-shrink:0; opacity:0.6; }
+
+/* ── STEP 4: OTP ── */
+.otp-info-box {
+  background:rgba(0,212,255,0.05);
+  border:1px solid rgba(0,212,255,0.15);
+  border-radius:14px; padding:24px;
+  margin-bottom:24px;
+}
+.otp-info-box p { font-size:14px; color:var(--text-dim); line-height:1.7; }
+.otp-info-box strong { color:var(--text); }
+
+.otp-code-area {
+  display:flex; align-items:center; gap:16px;
+  background:rgba(255,255,255,0.03);
+  border:1.5px solid var(--border);
+  border-radius:14px; padding:20px 24px;
+  margin-bottom:16px;
+}
+.otp-code {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:38px; letter-spacing:10px; color:var(--neon-blue);
+  text-shadow:var(--glow-blue);
+  flex:1;
+}
+.otp-timer {
+  display:flex; flex-direction:column; align-items:flex-end; gap:4px;
+}
+.otp-timer-count {
+  font-family:'Syne',sans-serif; font-weight:700; font-size:20px;
+  color:var(--neon-orange);
+}
+.otp-timer-label { font-size:11px; color:var(--text-muted); }
+
+.wa-btn {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  width:100%; padding:16px;
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  border:none; border-radius:12px; cursor:pointer;
+  font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:#fff;
+  text-decoration:none;
+  transition:all 0.25s;
+  box-shadow:0 4px 20px rgba(37,211,102,0.25);
+  margin-bottom:16px;
+}
+.wa-btn:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(37,211,102,0.35); }
+.wa-btn svg { width:22px; height:22px; }
+
+.otp-verify-wrap {
+  display:flex; gap:12px;
+  margin-top:20px;
+}
+.otp-digits-input {
+  flex:1; padding:14px;
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid var(--border);
+  border-radius:10px; outline:none;
+  font-family:'Syne',sans-serif; font-size:22px; font-weight:700;
+  color:var(--text); text-align:center;
+  letter-spacing:8px;
+  transition:border-color 0.25s;
+}
+.otp-digits-input:focus { border-color:rgba(0,212,255,0.4); }
+.otp-digits-input.error { border-color:rgba(255,68,102,0.5); animation:shake 0.4s ease; }
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+
+.otp-note {
+  font-size:12px; color:var(--text-muted); text-align:center;
+  margin-top:12px;
+}
+.otp-note a { color:var(--neon-blue); cursor:pointer; }
+
+.attempts-warn {
+  display:flex; align-items:center; gap:8px;
+  padding:10px 14px;
+  background:rgba(255,68,102,0.08);
+  border:1px solid rgba(255,68,102,0.2);
+  border-radius:8px; margin-top:12px;
+  font-size:13px; color:var(--neon-red);
+  display:none;
+}
+
+/* SUMMARY BAR (muncul di step 2,3,4) */
+.summary-bar {
+  display:flex; gap:20px; flex-wrap:wrap;
+  padding:14px 18px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:10px; margin-bottom:28px;
+}
+.summary-item { display:flex; flex-direction:column; gap:2px; }
+.summary-key { font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; }
+.summary-val { font-size:13px; color:var(--text-dim); font-weight:500; }
+.summary-val.blue { color:var(--neon-blue); }
+
+/* BUTTONS */
+.btn-row {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:32px; gap:12px;
+}
+.btn-back {
+  padding:12px 24px;
+  background:transparent; border:1.5px solid var(--border);
+  border-radius:10px; cursor:pointer;
+  font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text-dim);
+  transition:all 0.2s;
+  display:flex; align-items:center; gap:8px;
+}
+.btn-back:hover { border-color:rgba(255,255,255,0.2); color:var(--text); }
+
+.btn-next {
+  padding:13px 32px;
+  background:linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+  border:none; border-radius:10px; cursor:pointer;
+  font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:#fff;
+  transition:all 0.25s;
+  display:flex; align-items:center; gap:8px;
+  box-shadow:0 4px 20px rgba(0,212,255,0.2);
+}
+.btn-next:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,212,255,0.3); }
+.btn-next:disabled { opacity:0.4; pointer-events:none; }
+
+.btn-next-full {
+  width:100%;
+  padding:15px;
+  background:linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+  border:none; border-radius:10px; cursor:pointer;
+  font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:#fff;
+  transition:all 0.25s;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  box-shadow:0 4px 20px rgba(0,212,255,0.2);
+  margin-top:16px;
+}
+.btn-next-full:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,212,255,0.3); }
+.btn-next-full:disabled { opacity:0.4; pointer-events:none; }
+
+/* ERROR MSG */
+.err-msg {
+  font-size:12px; color:var(--neon-red);
+  margin-top:4px; display:none;
+}
+
+/* SUCCESS STATE */
+.success-wrap {
+  text-align:center; padding:40px 20px;
+  display:none;
+}
+.success-icon {
+  width:80px; height:80px; border-radius:50%;
+  background:rgba(0,255,148,0.1);
+  border:2px solid rgba(0,255,148,0.4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:36px; margin:0 auto 24px;
+  animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes popIn {
+  from { transform:scale(0); opacity:0; }
+  to   { transform:scale(1); opacity:1; }
+}
+.success-title { font-size:24px; font-weight:800; color:var(--neon-green); margin-bottom:10px; }
+.success-sub { font-size:15px; color:var(--text-dim); line-height:1.7; }
+.success-sub strong { color:var(--text); }
+
+/* PULSE DOTS */
+@keyframes pulse {
+  0%,100% { opacity:0.3; transform:scale(0.8); }
+  50%      { opacity:1;   transform:scale(1.2); }
+}
+
+/* LOADING SPINNER */
+.spinner {
+  width:18px; height:18px; border-radius:50%;
+  border:2px solid rgba(255,255,255,0.3);
+  border-top-color:#fff;
+  animation:spin 0.7s linear infinite;
+}
+
+/* STEP PANELS */
+.step-panel { display:none; animation:fadeUp 0.35s ease both; }
+.step-panel.active { display:block; }
+
+/* DISCLAIMER */
+.disclaimer {
+  margin-top:32px;
+  font-size:12px; color:var(--text-muted);
+  text-align:center; line-height:1.8;
+}
+.disclaimer a { color:var(--neon-blue); text-decoration:none; }
+
+/* PROGRESS BAR TOP */
+.progress-track {
+  width:100%; max-width:900px;
+  height:3px; background:rgba(255,255,255,0.06);
+  border-radius:2px; margin-bottom:32px; overflow:hidden;
+}
+.progress-fill {
+  height:100%;
+  background:linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  border-radius:2px;
+  transition:width 0.5s cubic-bezier(0.4,0,0.2,1);
+  box-shadow:0 0 10px rgba(0,212,255,0.5);
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — TABLET & MOBILE
+   ══════════════════════════════════════ */
+
+/* Tablet */
+@media(max-width:768px) {
+  .page-wrap { padding: 24px 16px 60px; }
+  .top-bar { margin-bottom: 28px; }
+  .card { padding: 28px 20px; border-radius: 16px; }
+  .step-title { font-size: 19px; }
+  .step-sub { font-size: 13px; margin-bottom: 24px; }
+  .step-indicator { margin-bottom: 28px; }
+  .step-label { font-size: 11px; }
+  .summary-bar { gap: 12px; padding: 12px 14px; }
+  #otpDisplay { font-size: 36px !important; letter-spacing: 8px !important; }
+  .btn-row { flex-direction: column-reverse; gap: 10px; margin-top: 24px; }
+  .btn-back { width: 100%; justify-content: center; }
+  .btn-next { width: 100%; justify-content: center; }
+}
+
+/* Mobile */
+@media(max-width:480px) {
+  .page-wrap { padding: 16px 12px 50px; }
+  .top-bar { margin-bottom: 20px; }
+  .logo-name { font-size: 15px; }
+  .login-link { font-size: 12px; }
+  .card { padding: 20px 16px; border-radius: 14px; }
+  .step-title { font-size: 17px; }
+  .step-indicator { margin-bottom: 24px; gap: 0; }
+  .step-label { display: none; }
+  .step-dot { width: 28px; height: 28px; font-size: 12px; }
+  .step-line { margin: 0 4px; }
+  .progress-track { margin-bottom: 20px; }
+  .template-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .template-thumb { height: 100px; }
+  .template-name { font-size: 12px; }
+  .template-tag { font-size: 10px; }
+  .form-grid { grid-template-columns: 1fr; gap: 14px; }
+  .form-input { padding: 12px 14px; font-size: 14px; }
+  .phone-input { font-size: 14px; }
+  .phone-flag { font-size: 13px; padding: 12px 10px; }
+  #otpDisplay { font-size: 28px !important; letter-spacing: 6px !important; }
+  .subdomain-input { font-size: 14px; padding: 12px 12px; }
+  .subdomain-suffix { font-size: 13px; padding: 12px 10px; }
+  .summary-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 12px;
+    gap: 16px;
+    scrollbar-width: none;
+  }
+  .summary-bar::-webkit-scrollbar { display: none; }
+  .summary-item { flex-shrink: 0; }
+  .wa-btn { font-size: 14px; padding: 14px 12px; }
+  .btn-row { flex-direction: column-reverse; gap: 8px; margin-top: 20px; }
+  .btn-back { width: 100%; justify-content: center; padding: 11px 20px; }
+  .btn-next { width: 100%; justify-content: center; padding: 13px 20px; font-size: 14px; }
+  .btn-next-full { font-size: 14px; padding: 13px; }
+  #otpStateWaiting { padding: 10px 0; }
+  .success-wrap { padding: 28px 12px; }
+  .success-icon { width: 64px; height: 64px; font-size: 28px; }
+  .success-title { font-size: 20px; }
+}
+
+@media(max-width:360px) {
+  .template-grid { grid-template-columns: 1fr; }
+  #otpDisplay { font-size: 22px !important; letter-spacing: 4px !important; }
+  .card { padding: 16px 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="ambient">
+  <span></span><span></span><span></span>
+</div>
+
+<div class="page-wrap">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <a href="#" class="logo">
+      <div class="logo-icon">T</div>
+      <span class="logo-name">TokoSaya</span>
+    </a>
+    <a href="#" class="login-link">Sudah punya akun? Masuk →</a>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-track" style="max-width:900px; width:100%;">
+    <div class="progress-fill" id="progressFill" style="width:25%"></div>
+  </div>
+
+  <!-- STEP INDICATOR -->
+  <div class="step-indicator" id="stepIndicator">
+    <div class="step-item active" id="si1">
+      <div class="step-dot active" id="sd1">1</div>
+      <span class="step-label">Template</span>
+    </div>
+    <div class="step-line" id="sl1"></div>
+    <div class="step-item" id="si2">
+      <div class="step-dot" id="sd2">2</div>
+      <span class="step-label">Subdomain</span>
+    </div>
+    <div class="step-line" id="sl2"></div>
+    <div class="step-item" id="si3">
+      <div class="step-dot" id="sd3">3</div>
+      <span class="step-label">Data Diri</span>
+    </div>
+    <div class="step-line" id="sl3"></div>
+    <div class="step-item" id="si4">
+      <div class="step-dot" id="sd4">4</div>
+      <span class="step-label">Verifikasi WA</span>
+    </div>
+  </div>
+
+  <!-- MAIN CARD -->
+  <div class="card">
+
+    <!-- ═══════════ STEP 1: PILIH TEMPLATE ═══════════ -->
+    <div class="step-panel active" id="step1">
+      <h2 class="step-title">Pilih template toko Anda</h2>
+      <p class="step-sub">Semua template dapat dikustomisasi warna, logo, dan nama toko. Pilih yang sesuai gaya bisnis Anda.</p>
+
+      <div class="template-grid" id="templateGrid">
+
+        <div class="template-card" data-id="1" onclick="selectTemplate(this)">
+          <div class="template-selected-badge">✓ Dipilih</div>
+          <div class="template-thumb t1">
+            <div class="template-mockup">
+              <div class="mock-header mock-accent"></div>
+              <div class="mock-hero" style="background:rgba(0,212,255,0.08)"></div>
+              <div class="mock-cols">
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+              </div>
+              <div class="mock-bar mock-accent"></div>
+            </div>
+          </div>
+          <div class="template-info">
+            <div class="template-name">Neon Dark</div>
+            <div class="template-tag">Elegan · Tech · Modern</div>
+          </div>
+        </div>
+
+        <div class="template-card" data-id="2" onclick="selectTemplate(this)">
+          <div class="template-selected-badge">✓ Dipilih</div>
+          <div class="template-thumb t2">
+            <div class="template-mockup">
+              <div class="mock-header mock-accent2"></div>
+              <div class="mock-hero" style="background:rgba(0,255,148,0.08)"></div>
+              <div class="mock-cols">
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+              </div>
+              <div class="mock-bar mock-accent2"></div>
+            </div>
+          </div>
+          <div class="template-info">
+            <div class="template-name">Fresh Green</div>
+            <div class="template-tag">Segar · Natural · Organik</div>
+          </div>
+        </div>
+
+        <div class="template-card" data-id="3" onclick="selectTemplate(this)">
+          <div class="template-selected-badge">✓ Dipilih</div>
+          <div class="template-thumb t3">
+            <div class="template-mockup">
+              <div class="mock-header mock-accent3"></div>
+              <div class="mock-hero" style="background:rgba(255,68,102,0.08)"></div>
+              <div class="mock-cols">
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+              </div>
+              <div class="mock-bar mock-accent3"></div>
+            </div>
+          </div>
+          <div class="template-info">
+            <div class="template-name">Bold Red</div>
+            <div class="template-tag">Berani · Fashion · Kuliner</div>
+          </div>
+        </div>
+
+        <div class="template-card" data-id="4" onclick="selectTemplate(this)">
+          <div class="template-selected-badge">✓ Dipilih</div>
+          <div class="template-thumb t4">
+            <div class="template-mockup">
+              <div class="mock-header mock-accent4"></div>
+              <div class="mock-hero" style="background:rgba(191,0,255,0.08)"></div>
+              <div class="mock-cols">
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+              </div>
+              <div class="mock-bar mock-accent4"></div>
+            </div>
+          </div>
+          <div class="template-info">
+            <div class="template-name">Royal Purple</div>
+            <div class="template-tag">Mewah · Kecantikan · Premium</div>
+          </div>
+        </div>
+
+        <div class="template-card" data-id="5" onclick="selectTemplate(this)">
+          <div class="template-selected-badge">✓ Dipilih</div>
+          <div class="template-thumb t5">
+            <div class="template-mockup">
+              <div class="mock-header mock-accent5"></div>
+              <div class="mock-hero" style="background:rgba(0,150,255,0.08)"></div>
+              <div class="mock-cols">
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+              </div>
+              <div class="mock-bar mock-accent5"></div>
+            </div>
+          </div>
+          <div class="template-info">
+            <div class="template-name">Ocean Blue</div>
+            <div class="template-tag">Profesional · Jasa · B2B</div>
+          </div>
+        </div>
+
+        <div class="template-card" data-id="6" onclick="selectTemplate(this)">
+          <div class="template-selected-badge">✓ Dipilih</div>
+          <div class="template-thumb t6">
+            <div class="template-mockup">
+              <div class="mock-header mock-accent6"></div>
+              <div class="mock-hero" style="background:rgba(255,180,0,0.08)"></div>
+              <div class="mock-cols">
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+                <div class="mock-col"></div>
+              </div>
+              <div class="mock-bar mock-accent6"></div>
+            </div>
+          </div>
+          <div class="template-info">
+            <div class="template-name">Golden Hour</div>
+            <div class="template-tag">Hangat · Makanan · UMKM</div>
+          </div>
+        </div>
+
+      </div>
+
+      <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:24px;">
+        💡 Template bisa diganti kapanpun setelah toko aktif
+      </p>
+
+      <div class="btn-row" style="justify-content:flex-end">
+        <button class="btn-next" id="btnNext1" onclick="goStep(2)" disabled>
+          Lanjut — Pilih Subdomain
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 2: SUBDOMAIN ═══════════ -->
+    <div class="step-panel" id="step2">
+
+      <div class="summary-bar">
+        <div class="summary-item">
+          <span class="summary-key">Template Dipilih</span>
+          <span class="summary-val blue" id="s_template">—</span>
+        </div>
+      </div>
+
+      <h2 class="step-title">Pilih alamat toko Anda</h2>
+      <p class="step-sub">Ini akan menjadi URL toko Anda: <span id="previewUrl">namatoko.tokosaya.id</span></p>
+
+      <div class="subdomain-wrap" id="subdomainWrap">
+        <input class="subdomain-input" id="subdomainInput" type="text"
+          placeholder="namatoko" maxlength="30"
+          oninput="onSubdomainInput(this.value)">
+        <div class="subdomain-suffix">.tokosaya.id</div>
+      </div>
+
+      <div class="subdomain-status hint" id="subdomainStatus">
+        <span>Ketik nama toko Anda (huruf kecil, angka, tanda hubung)</span>
+      </div>
+
+      <div class="subdomain-tips" style="margin-top:16px">
+        <p><strong>Tips memilih subdomain yang baik:</strong></p>
+        <p>✓ Gunakan nama toko atau brand Anda</p>
+        <p>✓ Singkat dan mudah diingat (maks 20 karakter)</p>
+        <p>✓ Hanya huruf kecil, angka, dan tanda hubung (-)</p>
+        <p>✗ Tidak boleh diawali atau diakhiri tanda hubung</p>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(1)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Kembali
+        </button>
+        <button class="btn-next" id="btnNext2" onclick="goStep(3)" disabled>
+          Lanjut — Data Diri
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 3: DATA DIRI ═══════════ -->
+    <div class="step-panel" id="step3">
+
+      <div class="summary-bar">
+        <div class="summary-item">
+          <span class="summary-key">Template</span>
+          <span class="summary-val blue" id="s2_template">—</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-key">Subdomain</span>
+          <span class="summary-val blue" id="s2_subdomain">—</span>
+        </div>
+      </div>
+
+      <h2 class="step-title">Data diri Anda</h2>
+      <p class="step-sub">Nomor WA akan digunakan untuk verifikasi dan notifikasi toko Anda.</p>
+
+      <div class="form-grid">
+
+        <div class="form-group full">
+          <label class="form-label">Nama Lengkap <span>*</span></label>
+          <input class="form-input" id="inp_nama" type="text" placeholder="Contoh: Budi Santoso"
+            oninput="validateStep3()">
+          <span class="err-msg" id="err_nama">Nama lengkap wajib diisi</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email <span>*</span></label>
+          <input class="form-input" id="inp_email" type="email" placeholder="email@anda.com"
+            oninput="validateStep3()">
+          <span class="err-msg" id="err_email">Masukkan email yang valid</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nomor WhatsApp <span>*</span></label>
+          <div class="phone-wrap">
+            <div class="phone-flag">🇮🇩 +62</div>
+            <input class="phone-input" id="inp_phone" type="tel"
+              placeholder="8123456789"
+              maxlength="13"
+              oninput="this.value=this.value.replace(/[^0-9]/g,''); validateStep3()">
+          </div>
+          <span class="form-note">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Kode OTP akan dikirim ke nomor WA ini
+          </span>
+          <span class="err-msg" id="err_phone">Nomor WA tidak valid (minimal 9 digit)</span>
+        </div>
+
+      </div>
+
+      <div style="margin-top:20px; padding:14px 16px; background:rgba(191,0,255,0.05); border:1px solid rgba(191,0,255,0.12); border-radius:10px;">
+        <p style="font-size:12px;color:var(--text-muted);line-height:1.7">
+          🔒 Data Anda aman dan tidak akan dibagikan ke pihak ketiga. 
+          Dengan mendaftar, Anda menyetujui 
+          <a href="#" style="color:var(--neon-blue);text-decoration:none">Syarat & Ketentuan</a> 
+          dan <a href="#" style="color:var(--neon-blue);text-decoration:none">Kebijakan Privasi</a> kami.
+        </p>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(2)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Kembali
+        </button>
+        <button class="btn-next" id="btnNext3" onclick="sendOTP()" disabled>
+          Kirim Kode OTP
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 4: VERIFIKASI OTP ═══════════ -->
+    <div class="step-panel" id="step4">
+
+      <div class="summary-bar">
+        <div class="summary-item">
+          <span class="summary-key">Template</span>
+          <span class="summary-val blue" id="s3_template">—</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-key">Subdomain</span>
+          <span class="summary-val blue" id="s3_subdomain">—</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-key">Nomor WA Anda</span>
+          <span class="summary-val blue" id="s3_phone">—</span>
+        </div>
+      </div>
+
+      <!-- STATE: BELUM KIRIM -->
+      <div id="otpStateIdle">
+        <h2 class="step-title">Verifikasi nomor WhatsApp</h2>
+        <p class="step-sub">
+          Kirim kode di bawah ini ke WhatsApp kami <strong>dari nomor <span id="displayPhone">—</span></strong>.
+          Cukup klik tombol hijau — kode sudah terketik otomatis, tinggal tekan Kirim.
+        </p>
+
+        <!-- KODE + NOMOR WA SISTEM -->
+        <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:16px; padding:28px 24px; margin-bottom:20px;">
+
+          <!-- Baris kode + timer -->
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Kode Verifikasi Anda</div>
+              <div id="otpDisplay" style="font-family:'Syne',sans-serif; font-weight:800; font-size:44px; letter-spacing:12px; color:var(--neon-blue); text-shadow:var(--glow-blue); line-height:1;">------</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Berlaku</div>
+              <div id="timerCount" style="font-family:'Syne',sans-serif; font-weight:700; font-size:26px; color:var(--neon-orange);">10:00</div>
+              <div style="font-size:11px; color:var(--text-muted);">menit lagi</div>
+            </div>
+          </div>
+
+          <!-- Nomor WA sistem -->
+          <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(37,211,102,0.06); border:1px solid rgba(37,211,102,0.15); border-radius:10px; margin-bottom:20px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366" style="flex-shrink:0">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <div style="flex:1">
+              <div style="font-size:11px; color:var(--text-muted); margin-bottom:2px;">Kirim ke nomor WhatsApp kami</div>
+              <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:16px; color:#25D366;" id="displaySystemWA">0812-3456-7890</div>
+            </div>
+          </div>
+
+          <!-- Tombol WA utama -->
+          <a class="wa-btn" id="waBtnLink" href="#" onclick="return openWA()" style="margin-bottom:0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Buka WhatsApp & Kirim Kode
+          </a>
+        </div>
+
+        <!-- Instruksi ringkas -->
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+          <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-dim);">
+            <div style="width:22px; height:22px; border-radius:50%; background:rgba(0,212,255,0.15); border:1px solid rgba(0,212,255,0.3); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:700; font-size:11px; color:var(--neon-blue); flex-shrink:0;">1</div>
+            Pastikan WhatsApp yang terbuka menggunakan nomor <strong id="confirmPhone" style="color:var(--text);">—</strong>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-dim);">
+            <div style="width:22px; height:22px; border-radius:50%; background:rgba(0,212,255,0.15); border:1px solid rgba(0,212,255,0.3); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:700; font-size:11px; color:var(--neon-blue); flex-shrink:0;">2</div>
+            Kode sudah terketik otomatis — tekan <strong style="color:var(--text);">Kirim / Send</strong> saja
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-dim);">
+            <div style="width:22px; height:22px; border-radius:50%; background:rgba(0,212,255,0.15); border:1px solid rgba(0,212,255,0.3); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:700; font-size:11px; color:var(--neon-blue); flex-shrink:0;">3</div>
+            Kembali ke halaman ini — sistem otomatis mendeteksi dalam detik
+          </div>
+        </div>
+
+        <div style="text-align:center; font-size:12px; color:var(--text-muted);">
+          Kode kedaluwarsa? <a onclick="resendOTP()" style="color:var(--neon-blue); cursor:pointer;">Generate ulang</a>
+          &nbsp;·&nbsp;
+          Nomor salah? <a onclick="goStep(3)" style="color:var(--neon-blue); cursor:pointer;">Ubah nomor</a>
+        </div>
+      </div>
+
+      <!-- STATE: SEDANG MENUNGGU (setelah klik tombol WA) -->
+      <div id="otpStateWaiting" style="display:none; text-align:center; padding:20px 0;">
+        <div style="width:64px; height:64px; border-radius:50%; border:2px solid rgba(0,212,255,0.2); border-top-color:var(--neon-blue); animation:spin 1s linear infinite; margin:0 auto 20px;"></div>
+        <h3 style="font-size:18px; font-weight:700; color:var(--text); margin-bottom:8px;">Menunggu konfirmasi...</h3>
+        <p style="font-size:14px; color:var(--text-dim); line-height:1.7; margin-bottom:20px;">
+          Sistem sedang memverifikasi pesan dari<br>
+          <strong style="color:var(--neon-blue)" id="waitingPhone">—</strong>
+        </p>
+        <div style="display:flex; align-items:center; justify-content:center; gap:6px; font-size:12px; color:var(--text-muted);">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--neon-orange);animation:pulse 1.2s ease infinite;"></div>
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--neon-orange);animation:pulse 1.2s ease infinite;animation-delay:0.2s"></div>
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--neon-orange);animation:pulse 1.2s ease infinite;animation-delay:0.4s"></div>
+          &nbsp; Mengecek setiap 3 detik
+        </div>
+        <div style="margin-top:20px;">
+          <a onclick="cancelWaiting()" style="font-size:12px; color:var(--text-muted); cursor:pointer;">
+            Belum terkirim? Klik untuk kembali
+          </a>
+        </div>
+      </div>
+
+      <!-- STATE: SUKSES -->
+      <div class="success-wrap" id="otpSuccess">
+        <div class="success-icon">✓</div>
+        <h2 class="success-title">Nomor Terverifikasi!</h2>
+        <p class="success-sub">
+          <strong id="successPhone">—</strong> berhasil diverifikasi.<br>
+          Melanjutkan ke pemilihan paket...
+        </p>
+      </div>
+
+      <!-- STATE: EXPIRED -->
+      <div id="otpStateExpired" style="display:none; text-align:center; padding:20px 0;">
+        <div style="font-size:48px; margin-bottom:16px;">⏰</div>
+        <h3 style="font-size:18px; font-weight:700; color:var(--neon-red); margin-bottom:8px;">Kode Kedaluwarsa</h3>
+        <p style="font-size:14px; color:var(--text-dim); margin-bottom:20px;">Kode verifikasi sudah tidak berlaku. Generate kode baru untuk melanjutkan.</p>
+        <button class="btn-next-full" onclick="resendOTP()" style="max-width:280px; margin:0 auto;">
+          Generate Kode Baru
+        </button>
+      </div>
+
+      <div class="btn-row" style="margin-top:16px" id="otpBackBtn">
+        <button class="btn-back" onclick="goStep(3)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Kembali
+        </button>
+      </div>
+    </div>
+
+  </div><!-- end .card -->
+
+  <p class="disclaimer">
+    &copy; 2025 TokoSaya · <a href="#">Privasi</a> · <a href="#">Bantuan</a>
+  </p>
+
+</div><!-- end .page-wrap -->
+
+<script>
+// ═══════════════════════════════════
+//  STATE
+// ═══════════════════════════════════
+const state = {
+  step: 1,
+  template: null,
+  templateName: null,
+  subdomain: null,
+  nama: null,
+  email: null,
+  phone: null,
+  otp: null,
+  otpExpiry: null,
+  otpAttempts: 0,
+  subdomainTimer: null,
+  countdownTimer: null,
+};
+
+// DEMO: subdomain yang sudah dipakai
+const takenSubdomains = ['tokobudi','tokoani','fashionstore','warungmakan','cantik'];
+
+// Nomor WA sistem kita (demo)
+const WA_SYSTEM_NUMBER = '6282241731144';
+const API_URL = 'https://api.chanceupme.com';
+
+// ═══════════════════════════════════
+//  STEP NAVIGATION
+// ═══════════════════════════════════
+function goStep(n) {
+  // Update state
+  state.step = n;
+
+  // Hide all panels
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+
+  // Update step indicators
+  for(let i=1;i<=4;i++){
+    const si = document.getElementById('si'+i);
+    const sd = document.getElementById('sd'+i);
+    si.className = 'step-item';
+    sd.className = 'step-dot';
+    if(i < n){ si.classList.add('done'); sd.classList.add('done'); sd.textContent=''; }
+    else if(i === n){ si.classList.add('active'); sd.classList.add('active'); sd.textContent=i; }
+    else { sd.textContent=i; }
+    // Lines
+    if(i<4){
+      const sl = document.getElementById('sl'+i);
+      sl.className = 'step-line' + (i<n?' done':'');
+    }
+  }
+
+  // Progress bar
+  const pct = {1:25,2:50,3:75,4:100};
+  document.getElementById('progressFill').style.width = pct[n] + '%';
+
+  // Populate summary bars
+  if(n>=2){
+    document.getElementById('s_template').textContent = state.templateName || '—';
+  }
+  if(n>=3){
+    document.getElementById('s2_template').textContent = state.templateName || '—';
+    document.getElementById('s2_subdomain').textContent = (state.subdomain||'—') + '.tokosaya.id';
+  }
+  if(n>=4){
+    document.getElementById('s3_template').textContent = state.templateName || '—';
+    document.getElementById('s3_subdomain').textContent = (state.subdomain||'—') + '.tokosaya.id';
+    const phoneFormatted = '+62' + state.phone;
+    document.getElementById('s3_phone').textContent = phoneFormatted;
+    document.getElementById('displayPhone').textContent = phoneFormatted;
+    document.getElementById('confirmPhone').textContent = phoneFormatted;
+    document.getElementById('successPhone').textContent = phoneFormatted;
+  }
+
+  // Scroll to top
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════════════════════════
+//  STEP 1: TEMPLATE
+// ═══════════════════════════════════
+const templateNames = {
+  '1':'Neon Dark','2':'Fresh Green','3':'Bold Red',
+  '4':'Royal Purple','5':'Ocean Blue','6':'Golden Hour'
+};
+
+function selectTemplate(el) {
+  document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  state.template = el.dataset.id;
+  state.templateName = templateNames[el.dataset.id];
+  document.getElementById('btnNext1').disabled = false;
+
+  // Ripple
+  el.style.transform = 'scale(0.97)';
+  setTimeout(()=>{ el.style.transform=''; },150);
+}
+
+// ═══════════════════════════════════
+//  STEP 2: SUBDOMAIN
+// ═══════════════════════════════════
+function onSubdomainInput(val) {
+  // Sanitize
+  val = val.toLowerCase().replace(/[^a-z0-9-]/g,'');
+  document.getElementById('subdomainInput').value = val;
+
+  const wrap = document.getElementById('subdomainWrap');
+  const status = document.getElementById('subdomainStatus');
+  const previewUrl = document.getElementById('previewUrl');
+  const btnNext = document.getElementById('btnNext2');
+
+  previewUrl.textContent = (val||'namatoko') + '.tokosaya.id';
+
+  // Clear prev timer
+  if(state.subdomainTimer) clearTimeout(state.subdomainTimer);
+  btnNext.disabled = true;
+  state.subdomain = null;
+
+  if(val.length === 0) {
+    wrap.className = 'subdomain-wrap';
+    status.className = 'subdomain-status hint';
+    status.innerHTML = '<span>Ketik nama toko Anda (huruf kecil, angka, tanda hubung)</span>';
+    return;
+  }
+  if(val.length < 3) {
+    wrap.className = 'subdomain-wrap invalid';
+    status.className = 'subdomain-status taken';
+    status.innerHTML = '<div class="status-dot"></div> Minimal 3 karakter';
+    return;
+  }
+  if(val.startsWith('-') || val.endsWith('-')) {
+    wrap.className = 'subdomain-wrap invalid';
+    status.className = 'subdomain-status taken';
+    status.innerHTML = '<div class="status-dot"></div> Tidak boleh diawali/diakhiri tanda hubung';
+    return;
+  }
+
+  // Checking state
+  wrap.className = 'subdomain-wrap checking';
+  status.className = 'subdomain-status checking';
+  status.innerHTML = '<div class="checking-spin"></div> Memeriksa ketersediaan...';
+
+  // Simulate API check (800ms delay)
+  state.subdomainTimer = setTimeout(()=>{
+    const taken = takenSubdomains.includes(val);
+    if(taken){
+      wrap.className = 'subdomain-wrap invalid';
+      status.className = 'subdomain-status taken';
+      status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>" sudah dipakai. Coba nama lain.';
+    } else {
+      wrap.className = 'subdomain-wrap valid';
+      status.className = 'subdomain-status available';
+      status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>.tokosaya.id" tersedia! ✓';
+      state.subdomain = val;
+      btnNext.disabled = false;
+    }
+  }, 800);
+}
+
+// ═══════════════════════════════════
+//  STEP 3: VALIDASI FORM
+// ═══════════════════════════════════
+function validateStep3() {
+  const nama  = document.getElementById('inp_nama').value.trim();
+  const email = document.getElementById('inp_email').value.trim();
+  const phone = document.getElementById('inp_phone').value.trim();
+
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const phoneOk = phone.length >= 9;
+  const namaOk  = nama.length >= 2;
+
+  document.getElementById('btnNext3').disabled = !(namaOk && emailOk && phoneOk);
+}
+
+// ═══════════════════════════════════
+//  STEP 4: OTP SYSTEM
+// ═══════════════════════════════════
+function generateOTP() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+async function sendOTP() {
+  const nama  = document.getElementById('inp_nama').value.trim();
+  const email = document.getElementById('inp_email').value.trim();
+  const phone = document.getElementById('inp_phone').value.trim();
+  if(!nama || !email || phone.length < 9) return;
+
+  state.nama  = nama;
+  state.email = email;
+  state.phone = phone;
+  state.otpAttempts = 0;
+  state.pollTimer = null;
+
+  // Disable tombol saat loading
+  const btn = document.getElementById('btnNext3');
+  btn.disabled = true;
+  btn.textContent = 'Mengirim...';
+
+  try {
+    const res = await fetch(`${API_URL}/wa/otp/generate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone: '62' + phone })
+    });
+    const data = await res.json();
+    if (!data.success) {
+      alert(data.error || 'Gagal generate OTP. Coba lagi.');
+      btn.disabled = false;
+      btn.innerHTML = 'Kirim Kode OTP <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      return;
+    }
+    state.otp = data.otp;
+    state.otpExpiry = Date.now() + 10 * 60 * 1000;
+  } catch(e) {
+    alert('Gagal terhubung ke server. Periksa koneksi internet Anda.');
+    btn.disabled = false;
+    btn.innerHTML = 'Kirim Kode OTP <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    return;
+  }
+
+  goStep(4);
+  showOTPState('idle');
+
+  document.getElementById('otpDisplay').textContent = state.otp;
+  document.getElementById('otpDisplay').style.opacity = '1';
+  document.getElementById('timerCount').style.color = 'var(--neon-orange)';
+
+  const phoneFormatted = '+62' + state.phone;
+  document.getElementById('displayPhone').textContent = phoneFormatted;
+  document.getElementById('confirmPhone').textContent = phoneFormatted;
+  document.getElementById('waitingPhone').textContent = phoneFormatted;
+  document.getElementById('successPhone').textContent = phoneFormatted;
+
+  const sysRaw = WA_SYSTEM_NUMBER.replace('62','0');
+  document.getElementById('displaySystemWA').textContent = sysRaw.replace(/(\d{4})(\d{4})(\d{4})/,'$1-$2-$3');
+
+  updateWALink();
+  startCountdown();
+}
+
+function updateWALink() {
+  const link = `https://wa.me/${WA_SYSTEM_NUMBER}?text=${encodeURIComponent(state.otp)}`;
+  document.getElementById('waBtnLink').href = link;
+}
+
+// ── Tampilkan salah satu state step 4 ──
+function showOTPState(s) {
+  document.getElementById('otpStateIdle').style.display    = s==='idle'    ? '' : 'none';
+  document.getElementById('otpStateWaiting').style.display = s==='waiting' ? '' : 'none';
+  document.getElementById('otpSuccess').style.display      = s==='success' ? '' : 'none';
+  document.getElementById('otpStateExpired').style.display = s==='expired' ? '' : 'none';
+  document.getElementById('otpBackBtn').style.display      = s==='success' ? 'none' : '';
+}
+
+// ── Buka WA → switch ke waiting → mulai polling ──
+function openWA() {
+  const link = `https://wa.me/${WA_SYSTEM_NUMBER}?text=${encodeURIComponent(state.otp)}`;
+  window.open(link, '_blank');
+  setTimeout(() => {
+    showOTPState('waiting');
+    startPolling();
+  }, 800);
+  return false;
+}
+
+function cancelWaiting() {
+  stopPolling();
+  showOTPState('idle');
+}
+
+// ── Polling tiap 3 detik ──
+// Produksi: GET /api/otp/status?phone=xxx&session=yyy → {verified: true/false}
+// Bot WA (WAHA/Baileys) menerima pesan → sanitasi → cocokkan → update DB
+function startPolling() {
+  stopPolling();
+  state.pollTimer = setInterval(async () => {
+    let verified = false;
+    try {
+      const res = await fetch(`${API_URL}/wa/otp/status?phone=62${state.phone}`);
+      const data = await res.json();
+      verified = data.verified;
+    } catch(e) { verified = false; }
+
+    if (verified) {
+      stopPolling();
+      if(state.countdownTimer) clearInterval(state.countdownTimer);
+      showOTPState('success');
+      // TODO: Lanjut ke Sesi 2
+    }
+  }, 3000);
+}
+
+function stopPolling() {
+  if(state.pollTimer) { clearInterval(state.pollTimer); state.pollTimer = null; }
+}
+
+// ── Countdown timer ──
+function startCountdown() {
+  if(state.countdownTimer) clearInterval(state.countdownTimer);
+  function update() {
+    const rem = state.otpExpiry - Date.now();
+    if(rem <= 0) {
+      clearInterval(state.countdownTimer);
+      stopPolling();
+      showOTPState('expired');
+      return;
+    }
+    const m = Math.floor(rem/60000);
+    const s = Math.floor((rem%60000)/1000);
+    document.getElementById('timerCount').textContent =
+      String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    if(rem < 120000) document.getElementById('timerCount').style.color = 'var(--neon-red)';
+  }
+  update();
+  state.countdownTimer = setInterval(update, 1000);
+}
+
+// ── Generate ulang kode ──
+async function resendOTP() {
+  stopPolling();
+
+  try {
+    const res = await fetch(`${API_URL}/wa/otp/generate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone: '62' + state.phone })
+    });
+    const data = await res.json();
+    if (!data.success) { alert(data.error || 'Gagal generate OTP. Coba lagi.'); return; }
+    state.otp = data.otp;
+    state.otpExpiry = Date.now() + 10 * 60 * 1000;
+  } catch(e) {
+    alert('Gagal terhubung ke server. Periksa koneksi internet Anda.');
+    return;
+  }
+
+  document.getElementById('otpDisplay').textContent = state.otp;
+  document.getElementById('otpDisplay').style.opacity = '1';
+  document.getElementById('timerCount').style.color = 'var(--neon-orange)';
+  updateWALink();
+  startCountdown();
+  showOTPState('idle');
+  // Flash animasi kode baru
+  const el = document.getElementById('otpDisplay');
+  el.style.transition = 'transform 0.2s';
+  el.style.transform = 'scale(1.08)';
+  setTimeout(() => { el.style.transform = ''; }, 250);
+}
+</script>
+</body>
+</html>
