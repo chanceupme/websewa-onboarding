@@ -1367,8 +1367,36 @@ function startPolling() {
     if (verified) {
       stopPolling();
       if(state.countdownTimer) clearInterval(state.countdownTimer);
+
+      // Simpan data pendaftaran ke database
+      try {
+        const simpan = await fetch(`${API_URL}/daftar/simpan`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nama: state.nama,
+            email: state.email,
+            phone: '62' + state.phone,
+            subdomain: state.subdomain,
+            template: state.template
+          })
+        });
+        const hasil = await simpan.json();
+        if (!hasil.success) {
+          alert('Gagal menyimpan data: ' + (hasil.error || 'Coba lagi'));
+          return;
+        }
+        state.pendaftaranId = hasil.id;
+      } catch(e) {
+        alert('Gagal terhubung ke server saat menyimpan data.');
+        return;
+      }
+
       showOTPState('success');
-      // TODO: Lanjut ke Sesi 2
+      // TODO: Redirect ke Sesi 2 setelah 2 detik
+      setTimeout(() => {
+        window.location.href = '/sesi2?id=' + state.pendaftaranId;
+      }, 2500);
     }
   }, 3000);
 }
