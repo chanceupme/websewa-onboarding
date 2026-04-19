@@ -647,7 +647,10 @@ body::before {
       <div class="logo-icon">T</div>
       <span class="logo-name">TokoSaya</span>
     </a>
-    <a href="#" class="login-link">Sudah punya akun? Masuk →</a>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="javascript:void(0)" onclick="document.getElementById('modalLanjut').style.display='flex'" class="login-link">Lanjutkan pendaftaran →</a>
+      <a href="#" class="login-link">Sudah punya akun? Masuk →</a>
+    </div>
   </div>
 
   <!-- PROGRESS BAR -->
@@ -1099,6 +1102,9 @@ const state = {
   countdownTimer: null,
 };
 
+// DEMO: subdomain yang sudah dipakai
+const takenSubdomains = ['tokobudi','tokoani','fashionstore','warungmakan','cantik'];
+
 // Nomor WA sistem kita (demo)
 const WA_SYSTEM_NUMBER = '6282241731144';
 const API_URL = 'https://api.chanceupme.com';
@@ -1220,26 +1226,19 @@ function onSubdomainInput(val) {
   status.className = 'subdomain-status checking';
   status.innerHTML = '<div class="checking-spin"></div> Memeriksa ketersediaan...';
 
-  // Cek ke backend
-  state.subdomainTimer = setTimeout(async ()=>{
-    try {
-      const res = await fetch(`${API_URL}/daftar/cek-subdomain?subdomain=${val}`);
-      const data = await res.json();
-      if (data.tersedia) {
-        wrap.className = 'subdomain-wrap valid';
-        status.className = 'subdomain-status available';
-        status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>.tokosaya.id" tersedia! ✓';
-        state.subdomain = val;
-        btnNext.disabled = false;
-      } else {
-        wrap.className = 'subdomain-wrap invalid';
-        status.className = 'subdomain-status taken';
-        status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>" sudah dipakai. Coba nama lain.';
-      }
-    } catch(e) {
+  // Simulate API check (800ms delay)
+  state.subdomainTimer = setTimeout(()=>{
+    const taken = takenSubdomains.includes(val);
+    if(taken){
       wrap.className = 'subdomain-wrap invalid';
       status.className = 'subdomain-status taken';
-      status.innerHTML = '<div class="status-dot"></div> Gagal cek subdomain. Coba lagi.';
+      status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>" sudah dipakai. Coba nama lain.';
+    } else {
+      wrap.className = 'subdomain-wrap valid';
+      status.className = 'subdomain-status available';
+      status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>.tokosaya.id" tersedia! ✓';
+      state.subdomain = val;
+      btnNext.disabled = false;
     }
   }, 800);
 }
@@ -1372,7 +1371,7 @@ function startPolling() {
       stopPolling();
       if(state.countdownTimer) clearInterval(state.countdownTimer);
 
-      // Simpan data pendaftaran ke database
+      // Simpan data pendaftaran ke backend
       try {
         const simpan = await fetch(`${API_URL}/daftar/simpan`, {
           method: 'POST',
@@ -1392,14 +1391,14 @@ function startPolling() {
         }
         state.pendaftaranId = hasil.id;
       } catch(e) {
-        alert('Gagal terhubung ke server saat menyimpan data.');
+        alert('Gagal terhubung ke server saat menyimpan data. Coba refresh halaman.');
         return;
       }
 
       showOTPState('success');
-      // TODO: Redirect ke Sesi 2 setelah 2 detik
+      // Redirect ke Sesi 2 setelah 2.5 detik (biar user sempat lihat pesan sukses)
       setTimeout(() => {
-        window.location.href = '/sesi2?id=' + state.pendaftaranId;
+        window.location.href = 'https://daftar.chanceupme.com/sesi2?id=' + state.pendaftaranId;
       }, 2500);
     }
   }, 3000);
@@ -1460,6 +1459,103 @@ async function resendOTP() {
   el.style.transition = 'transform 0.2s';
   el.style.transform = 'scale(1.08)';
   setTimeout(() => { el.style.transform = ''; }, 250);
+}
+</script>
+<!-- MODAL: Lanjutkan Pendaftaran -->
+<div id="modalLanjut" style="display:none; position:fixed; inset:0; z-index:999;
+  background:rgba(6,6,18,0.88); backdrop-filter:blur(10px);
+  align-items:center; justify-content:center; padding:20px;">
+  <div style="width:100%; max-width:380px; background:#0d0d1f;
+    border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:36px 28px;">
+    <h3 style="font-family:'Syne',sans-serif; font-size:18px; margin-bottom:8px; color:#f0f0ff;">
+      Lanjutkan Pendaftaran
+    </h3>
+    <p style="font-size:13px; color:#8888aa; margin-bottom:24px; line-height:1.6;">
+      Masukkan nomor WhatsApp yang sudah Anda daftarkan. Kami akan kirimkan kembali link untuk melanjutkan pilih paket.
+    </p>
+    <div style="margin-bottom:16px;">
+      <label style="font-size:11px; font-weight:600; color:#8888aa; text-transform:uppercase; letter-spacing:0.8px; display:block; margin-bottom:8px;">
+        Nomor WhatsApp
+      </label>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="padding:12px 14px; background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.08); border-radius:10px; font-size:14px; color:#8888aa; white-space:nowrap; flex-shrink:0;">
+          +62
+        </span>
+        <input id="resendPhone" type="tel" placeholder="8123456789"
+          style="flex:1; padding:12px 14px; background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.08); border-radius:10px; outline:none; font-size:14px; color:#f0f0ff; font-family:'DM Sans',sans-serif; width:100%; min-width:0;"
+          onkeydown="if(event.key==='Enter') doResendSesi2()"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+      </div>
+    </div>
+    <div id="resendMsg" style="font-size:13px; margin-bottom:12px; display:none; line-height:1.5; padding:10px 12px; border-radius:8px;"></div>
+    <button onclick="doResendSesi2()" id="btnResend"
+      style="width:100%; padding:13px; background:linear-gradient(135deg,#00D4FF,#BF00FF);
+      border:none; border-radius:10px; cursor:pointer; font-family:'Syne',sans-serif;
+      font-weight:700; font-size:14px; color:#fff; margin-bottom:10px; transition:opacity 0.2s;">
+      Kirim Ulang Link
+    </button>
+    <button onclick="tutupModalLanjut()"
+      style="width:100%; padding:10px; background:transparent; border:1px solid rgba(255,255,255,0.08);
+      border-radius:10px; cursor:pointer; font-size:13px; color:#8888aa; font-family:'DM Sans',sans-serif;">
+      Batal
+    </button>
+  </div>
+</div>
+
+<script>
+function tutupModalLanjut() {
+  document.getElementById('modalLanjut').style.display = 'none';
+  document.getElementById('resendPhone').value = '';
+  const msg = document.getElementById('resendMsg');
+  msg.style.display = 'none';
+  msg.textContent = '';
+  const btn = document.getElementById('btnResend');
+  btn.disabled = false;
+  btn.textContent = 'Kirim Ulang Link';
+}
+
+async function doResendSesi2() {
+  const phone = document.getElementById('resendPhone').value.trim();
+  if (!phone || phone.length < 8) return;
+
+  const btn = document.getElementById('btnResend');
+  const msg = document.getElementById('resendMsg');
+  btn.disabled = true;
+  btn.textContent = 'Mengirim...';
+  msg.style.display = 'none';
+
+  try {
+    const res = await fetch(`${API_URL}/daftar/resend-sesi2`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone: '62' + phone })
+    });
+    const data = await res.json();
+
+    msg.style.display = 'block';
+    if (data.success) {
+      msg.style.background = 'rgba(0,255,148,0.08)';
+      msg.style.border = '1px solid rgba(0,255,148,0.2)';
+      msg.style.color = '#00FF94';
+      msg.textContent = '✓ Link sudah dikirim ke WhatsApp Anda. Silakan cek WA.';
+      btn.textContent = 'Terkirim ✓';
+    } else {
+      msg.style.background = 'rgba(255,68,102,0.08)';
+      msg.style.border = '1px solid rgba(255,68,102,0.2)';
+      msg.style.color = '#FF4466';
+      msg.textContent = data.error || 'Gagal mengirim link. Coba lagi.';
+      btn.disabled = false;
+      btn.textContent = 'Kirim Ulang Link';
+    }
+  } catch(e) {
+    msg.style.display = 'block';
+    msg.style.background = 'rgba(255,68,102,0.08)';
+    msg.style.border = '1px solid rgba(255,68,102,0.2)';
+    msg.style.color = '#FF4466';
+    msg.textContent = 'Gagal terhubung ke server. Periksa koneksi internet.';
+    btn.disabled = false;
+    btn.textContent = 'Kirim Ulang Link';
+  }
 }
 </script>
 </body>
