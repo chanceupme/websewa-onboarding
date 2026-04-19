@@ -1102,9 +1102,6 @@ const state = {
   countdownTimer: null,
 };
 
-// DEMO: subdomain yang sudah dipakai
-const takenSubdomains = ['tokobudi','tokoani','fashionstore','warungmakan','cantik'];
-
 // Nomor WA sistem kita (demo)
 const WA_SYSTEM_NUMBER = '6282241731144';
 const API_URL = 'https://api.chanceupme.com';
@@ -1227,18 +1224,25 @@ function onSubdomainInput(val) {
   status.innerHTML = '<div class="checking-spin"></div> Memeriksa ketersediaan...';
 
   // Simulate API check (800ms delay)
-  state.subdomainTimer = setTimeout(()=>{
-    const taken = takenSubdomains.includes(val);
-    if(taken){
+  state.subdomainTimer = setTimeout(async ()=>{
+    try {
+      const res = await fetch(`${API_URL}/daftar/cek-subdomain?subdomain=${val}`);
+      const data = await res.json();
+      if (data.tersedia) {
+        wrap.className = 'subdomain-wrap valid';
+        status.className = 'subdomain-status available';
+        status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>.tokosaya.id" tersedia! ✓';
+        state.subdomain = val;
+        btnNext.disabled = false;
+      } else {
+        wrap.className = 'subdomain-wrap invalid';
+        status.className = 'subdomain-status taken';
+        status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>" sudah dipakai. Coba nama lain.';
+      }
+    } catch(e) {
       wrap.className = 'subdomain-wrap invalid';
       status.className = 'subdomain-status taken';
-      status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>" sudah dipakai. Coba nama lain.';
-    } else {
-      wrap.className = 'subdomain-wrap valid';
-      status.className = 'subdomain-status available';
-      status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>.tokosaya.id" tersedia! ✓';
-      state.subdomain = val;
-      btnNext.disabled = false;
+      status.innerHTML = '<div class="status-dot"></div> Gagal cek subdomain. Coba lagi.';
     }
   }, 800);
 }
