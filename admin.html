@@ -8,293 +8,143 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
-  --bg: #060612;
-  --bg2: #0d0d1f;
-  --card: rgba(255,255,255,0.04);
-  --border: rgba(255,255,255,0.08);
-  --text: #f0f0ff;
-  --text-dim: #8888aa;
-  --text-muted: #555577;
-  --neon-blue: #00D4FF;
-  --neon-green: #00FF94;
-  --neon-red: #FF4466;
-  --neon-orange: #FF8C00;
-  --neon-purple: #BF00FF;
-  --neon-yellow: #FFD600;
-  --neon-cyan: #00FFE0;
+  --bg: #060612; --bg2: #0d0d1f;
+  --card: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.08);
+  --text: #f0f0ff; --text-dim: #8888aa; --text-muted: #555577;
+  --neon-blue: #00D4FF; --neon-green: #00FF94; --neon-red: #FF4466;
+  --neon-orange: #FF8C00; --neon-purple: #BF00FF; --neon-cyan: #00FFE0;
   --glow-blue: 0 0 20px rgba(0,212,255,0.3);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-h1,h2,h3 { font-family: 'Syne', sans-serif; }
+body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+h1,h2,h3 { font-family:'Syne',sans-serif; }
 
-/* ── Login ── */
-.login-wrap {
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  padding: 20px;
-}
-.login-box {
-  width: 100%; max-width: 380px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 40px 32px;
-}
-.login-logo { text-align: center; margin-bottom: 32px; }
-.login-logo-icon {
-  width: 52px; height: 52px; border-radius: 14px;
-  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: #fff;
-  box-shadow: var(--glow-blue);
-  margin: 0 auto 12px;
-}
-.login-logo h2 { font-size: 18px; color: var(--text); }
-.login-logo p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
-.form-group { margin-bottom: 16px; }
-.form-label { font-size: 12px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; display: block; margin-bottom: 8px; }
-.form-input {
-  width: 100%; padding: 13px 16px;
-  background: rgba(255,255,255,0.04);
-  border: 1.5px solid var(--border);
-  border-radius: 10px; outline: none;
-  font-family: 'DM Sans', sans-serif; font-size: 15px;
-  color: var(--text);
-  transition: border-color 0.25s;
-}
-.form-input:focus { border-color: rgba(0,212,255,0.4); }
-.btn-login {
-  width: 100%; padding: 13px;
-  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-  border: none; border-radius: 10px; cursor: pointer;
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #fff;
-  margin-top: 8px; transition: all 0.25s;
-}
-.btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.3); }
-.btn-login:disabled { opacity: 0.5; pointer-events: none; }
-.err-login { font-size: 13px; color: var(--neon-red); text-align: center; margin-top: 12px; display: none; }
+/* Login */
+.login-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+.login-box { width:100%; max-width:380px; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:20px; padding:40px 32px; }
+.login-logo { text-align:center; margin-bottom:32px; }
+.login-logo-icon { width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,var(--neon-blue),var(--neon-purple)); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:20px; color:#fff; box-shadow:var(--glow-blue); margin:0 auto 12px; }
+.login-logo h2 { font-size:18px; color:var(--text); }
+.login-logo p { font-size:13px; color:var(--text-muted); margin-top:4px; }
+.form-group { margin-bottom:16px; }
+.form-label { font-size:12px; font-weight:600; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.8px; display:block; margin-bottom:8px; }
+.form-input { width:100%; padding:13px 16px; background:rgba(255,255,255,0.04); border:1.5px solid var(--border); border-radius:10px; outline:none; font-family:'DM Sans',sans-serif; font-size:15px; color:var(--text); transition:border-color 0.25s; }
+.form-input:focus { border-color:rgba(0,212,255,0.4); }
+.btn-login { width:100%; padding:13px; background:linear-gradient(135deg,var(--neon-blue),var(--neon-purple)); border:none; border-radius:10px; cursor:pointer; font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:#fff; margin-top:8px; transition:all 0.25s; }
+.btn-login:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,212,255,0.3); }
+.btn-login:disabled { opacity:0.5; pointer-events:none; }
+.err-login { font-size:13px; color:var(--neon-red); text-align:center; margin-top:12px; display:none; }
 
-/* ── Dashboard ── */
-.dashboard { display: none; }
-.topbar {
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 32px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.topbar-left { display: flex; align-items: center; gap: 12px; }
-.topbar-logo {
-  width: 36px; height: 36px; border-radius: 10px;
-  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: #fff;
-}
-.topbar h1 { font-size: 16px; color: var(--text); }
-.topbar-right { display: flex; align-items: center; gap: 16px; }
-.btn-logout {
-  padding: 8px 16px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 8px; cursor: pointer;
-  font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text-dim);
-  transition: all 0.2s;
-}
-.btn-logout:hover { border-color: var(--neon-red); color: var(--neon-red); }
+/* Dashboard */
+.dashboard { display:none; }
+.topbar { background:rgba(255,255,255,0.03); border-bottom:1px solid var(--border); padding:16px 32px; display:flex; align-items:center; justify-content:space-between; }
+.topbar-left { display:flex; align-items:center; gap:12px; }
+.topbar-logo { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--neon-blue),var(--neon-purple)); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:14px; color:#fff; }
+.topbar h1 { font-size:16px; color:var(--text); }
+.topbar-right { display:flex; align-items:center; gap:16px; }
+.btn-logout { padding:8px 16px; background:transparent; border:1px solid var(--border); border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text-dim); transition:all 0.2s; }
+.btn-logout:hover { border-color:var(--neon-red); color:var(--neon-red); }
+.content { padding:32px; max-width:1400px; margin:0 auto; }
 
-.content { padding: 32px; max-width: 1200px; margin: 0 auto; }
+/* Stats */
+.stats-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin-bottom:32px; }
+@media(max-width:1100px){ .stats-grid { grid-template-columns:repeat(3,1fr); } }
+@media(max-width:600px){ .stats-grid { grid-template-columns:repeat(2,1fr); } }
+.stat-card { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:18px 16px; transition:border-color 0.2s,transform 0.2s; }
+.stat-card.clickable { cursor:pointer; border-color:rgba(191,0,255,0.2); background:rgba(191,0,255,0.04); position:relative; }
+.stat-card.clickable:hover { border-color:rgba(191,0,255,0.5); transform:translateY(-2px); box-shadow:0 6px 24px rgba(191,0,255,0.15); }
+.stat-card.clickable::after { content:'↗'; position:absolute; top:12px; right:14px; font-size:13px; color:var(--neon-purple); opacity:0.6; }
+.stat-label { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:8px; }
+.stat-value { font-family:'Syne',sans-serif; font-weight:800; font-size:26px; }
+.stat-value.blue { color:var(--neon-blue); } .stat-value.green { color:var(--neon-green); }
+.stat-value.orange { color:var(--neon-orange); } .stat-value.purple { color:var(--neon-purple); }
+.stat-value.cyan { color:var(--neon-cyan); } .stat-value.red { color:var(--neon-red); }
 
-/* ── Stats Grid ── */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 14px;
-  margin-bottom: 32px;
-}
-@media(max-width:1100px) { .stats-grid { grid-template-columns: repeat(3,1fr); } }
-@media(max-width:600px)  { .stats-grid { grid-template-columns: repeat(2,1fr); } }
+/* Table */
+.table-card { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+.table-header { padding:20px 24px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); flex-wrap:wrap; gap:12px; }
+.table-header h2 { font-size:16px; color:var(--text); }
+.table-actions { display:flex; gap:10px; align-items:center; }
+.search-input { padding:8px 14px; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:8px; outline:none; font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text); width:200px; }
+.search-input:focus { border-color:rgba(0,212,255,0.3); }
+.btn-refresh { padding:8px 14px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:13px; color:var(--neon-blue); transition:all 0.2s; }
+.btn-refresh:hover { background:rgba(0,212,255,0.15); }
 
-.stat-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 14px; padding: 18px 16px;
-  transition: border-color 0.2s, transform 0.2s;
-}
-.stat-card.clickable {
-  cursor: pointer;
-  border-color: rgba(191,0,255,0.2);
-  background: rgba(191,0,255,0.04);
-  position: relative;
-}
-.stat-card.clickable:hover {
-  border-color: rgba(191,0,255,0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(191,0,255,0.15);
-}
-.stat-card.clickable::after {
-  content: '↗';
-  position: absolute; top: 12px; right: 14px;
-  font-size: 13px; color: var(--neon-purple); opacity: 0.6;
-}
-.stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
-.stat-value { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; }
-.stat-value.blue    { color: var(--neon-blue); }
-.stat-value.green   { color: var(--neon-green); }
-.stat-value.orange  { color: var(--neon-orange); }
-.stat-value.purple  { color: var(--neon-purple); }
-.stat-value.cyan    { color: var(--neon-cyan); }
-.stat-value.red     { color: var(--neon-red); }
+.table-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; }
+thead tr { border-bottom:1px solid var(--border); }
+th { padding:12px 14px; font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; text-align:left; white-space:nowrap; background:rgba(255,255,255,0.02); }
+td { padding:12px 14px; font-size:12px; color:var(--text-dim); border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:middle; }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:rgba(255,255,255,0.02); }
+.td-nama { color:var(--text); font-weight:500; font-size:13px; }
+.td-subdomain { color:var(--neon-blue); font-family:monospace; font-size:11px; }
+.td-phone { font-family:monospace; font-size:11px; }
+.td-date { font-size:11px; color:var(--text-muted); white-space:nowrap; }
+.td-paket { font-size:11px; }
 
-/* ── Table ── */
-.table-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 16px; overflow: hidden;
-}
-.table-header {
-  padding: 20px 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap; gap: 12px;
-}
-.table-header h2 { font-size: 16px; color: var(--text); }
-.table-actions { display: flex; gap: 10px; align-items: center; }
-.search-input {
-  padding: 8px 14px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  border-radius: 8px; outline: none;
-  font-family: 'DM Sans', sans-serif; font-size: 13px;
-  color: var(--text); width: 200px;
-}
-.search-input:focus { border-color: rgba(0,212,255,0.3); }
-.btn-refresh {
-  padding: 8px 14px;
-  background: rgba(0,212,255,0.08);
-  border: 1px solid rgba(0,212,255,0.2);
-  border-radius: 8px; cursor: pointer;
-  font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--neon-blue);
-  transition: all 0.2s;
-}
-.btn-refresh:hover { background: rgba(0,212,255,0.15); }
+/* Badges */
+.badge { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:20px; font-size:10px; font-weight:700; white-space:nowrap; }
+.badge-tunggu-sesi1 { background:rgba(255,140,0,0.1); color:#ffaa44; border:1px solid rgba(255,140,0,0.2); }
+.badge-tunggu-sesi2 { background:rgba(0,212,255,0.1); color:var(--neon-blue); border:1px solid rgba(0,212,255,0.2); }
+.badge-tunggu-bayar { background:rgba(255,215,0,0.1); color:#FFD700; border:1px solid rgba(255,215,0,0.2); }
+.badge-trial { background:rgba(0,255,224,0.1); color:var(--neon-cyan); border:1px solid rgba(0,255,224,0.3); }
+.badge-trial-expired { background:rgba(255,68,102,0.08); color:#ff7799; border:1px solid rgba(255,68,102,0.2); }
+.badge-aktif { background:rgba(0,255,148,0.1); color:var(--neon-green); border:1px solid rgba(0,255,148,0.3); }
+.badge-nonaktif { background:rgba(255,68,102,0.1); color:var(--neon-red); border:1px solid rgba(255,68,102,0.3); }
 
-.table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; }
-thead tr { border-bottom: 1px solid var(--border); }
-th {
-  padding: 12px 16px;
-  font-size: 11px; font-weight: 600; color: var(--text-muted);
-  text-transform: uppercase; letter-spacing: 0.8px;
-  text-align: left; white-space: nowrap;
-  background: rgba(255,255,255,0.02);
-}
-td {
-  padding: 14px 16px;
-  font-size: 13px; color: var(--text-dim);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  vertical-align: middle;
-}
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(255,255,255,0.02); }
-.td-nama { color: var(--text); font-weight: 500; }
-.td-subdomain { color: var(--neon-blue); font-family: monospace; font-size: 12px; }
-.td-phone { font-family: monospace; font-size: 12px; }
-.td-date { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+.template-tag { display:inline-block; padding:2px 7px; background:rgba(191,0,255,0.1); color:var(--neon-purple); border-radius:6px; font-size:10px; }
+.kupon-tag { display:inline-block; padding:2px 7px; background:rgba(0,255,148,0.08); color:var(--neon-green); border-radius:6px; font-size:10px; font-family:monospace; }
 
-.badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 4px 10px; border-radius: 20px;
-  font-size: 11px; font-weight: 600;
-}
-.badge-menunggu  { background: rgba(255,140,0,0.15);   color: var(--neon-orange); border: 1px solid rgba(255,140,0,0.3); }
-.badge-aktif     { background: rgba(0,255,148,0.1);    color: var(--neon-green);  border: 1px solid rgba(0,255,148,0.3); }
-.badge-trial     { background: rgba(0,255,224,0.1);    color: var(--neon-cyan);   border: 1px solid rgba(0,255,224,0.3); }
-.badge-nonaktif  { background: rgba(255,68,102,0.1);   color: var(--neon-red);    border: 1px solid rgba(255,68,102,0.3); }
-.badge-expired   { background: rgba(255,68,102,0.07);  color: #ff7799;            border: 1px solid rgba(255,68,102,0.2); }
+/* Delete button */
+.btn-delete { padding:4px 10px; background:transparent; border:1px solid rgba(255,68,102,0.3); border-radius:6px; cursor:pointer; font-size:11px; color:var(--neon-red); transition:all 0.2s; white-space:nowrap; }
+.btn-delete:hover { background:rgba(255,68,102,0.1); border-color:var(--neon-red); }
 
-.template-tag {
-  display: inline-block; padding: 3px 8px;
-  background: rgba(191,0,255,0.1); color: var(--neon-purple);
-  border-radius: 6px; font-size: 11px;
-}
-.empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
-.empty-state div { font-size: 40px; margin-bottom: 12px; }
-.loading-state { text-align: center; padding: 40px; color: var(--text-muted); font-size: 14px; }
+/* Paket info */
+.paket-info { display:flex; flex-direction:column; gap:2px; }
+.paket-info-row { font-size:10px; color:var(--text-muted); }
+.paket-info-row span { color:var(--text-dim); }
 
-/* ── Modal Chart ── */
-.modal-overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 100;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(6px);
-  align-items: center; justify-content: center;
-  padding: 20px;
-}
-.modal-overlay.open { display: flex; }
-.modal-box {
-  background: #0d0d1f;
-  border: 1px solid rgba(191,0,255,0.25);
-  border-radius: 20px;
-  width: 100%; max-width: 860px;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
-}
-@keyframes slideUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
-.modal-header {
-  padding: 24px 28px 0;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.modal-header h2 { font-size: 18px; color: var(--text); }
-.modal-close {
-  width: 32px; height: 32px; border-radius: 8px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
-  cursor: pointer; color: var(--text-dim); font-size: 18px;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-}
-.modal-close:hover { border-color: var(--neon-red); color: var(--neon-red); }
+.empty-state { text-align:center; padding:60px 20px; color:var(--text-muted); }
+.empty-state div { font-size:40px; margin-bottom:12px; }
+.loading-state { text-align:center; padding:40px; color:var(--text-muted); font-size:14px; }
 
-.chart-wrap { padding: 24px 28px; }
-.chart-canvas-wrap { position: relative; height: 260px; margin-bottom: 24px; }
+/* Confirm Modal */
+.modal-overlay { display:none; position:fixed; inset:0; z-index:100; background:rgba(0,0,0,0.75); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:20px; }
+.modal-overlay.open { display:flex; }
+.modal-box { background:#0d0d1f; border:1px solid rgba(255,68,102,0.3); border-radius:18px; width:100%; max-width:400px; padding:32px 28px; text-align:center; animation:slideUp 0.25s ease; }
+@keyframes slideUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+.modal-icon { font-size:40px; margin-bottom:14px; }
+.modal-box h3 { font-size:18px; color:var(--neon-red); margin-bottom:8px; }
+.modal-box p { font-size:13px; color:var(--text-dim); line-height:1.7; margin-bottom:24px; }
+.modal-box p strong { color:var(--text); }
+.modal-btns { display:flex; gap:10px; }
+.btn-cancel { flex:1; padding:11px; background:transparent; border:1px solid var(--border); border-radius:10px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text-dim); transition:all 0.2s; }
+.btn-cancel:hover { border-color:rgba(255,255,255,0.2); color:var(--text); }
+.btn-confirm-delete { flex:1; padding:11px; background:rgba(255,68,102,0.15); border:1px solid var(--neon-red); border-radius:10px; cursor:pointer; font-family:'Syne',sans-serif; font-weight:700; font-size:14px; color:var(--neon-red); transition:all 0.2s; }
+.btn-confirm-delete:hover { background:rgba(255,68,102,0.25); }
+.btn-confirm-delete:disabled { opacity:0.5; pointer-events:none; }
 
-.modal-table-wrap { overflow-x: auto; }
-.modal-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.modal-table th {
-  padding: 10px 14px;
-  font-size: 11px; font-weight: 600; color: var(--text-muted);
-  text-transform: uppercase; letter-spacing: 0.7px;
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-}
-.modal-table td {
-  padding: 10px 14px;
-  color: var(--text-dim);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-.modal-table tr:last-child td { border-bottom: none; }
-.modal-table .num { font-family: 'Syne', sans-serif; font-weight: 700; }
-.modal-table .num.blue   { color: var(--neon-blue); }
-.modal-table .num.orange { color: var(--neon-orange); }
-.modal-table .num.cyan   { color: var(--neon-cyan); }
-.modal-table .num.green  { color: var(--neon-green); }
-.modal-bottom-pad { height: 24px; }
+/* Chart Modal */
+.chart-modal-overlay { display:none; position:fixed; inset:0; z-index:100; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:20px; }
+.chart-modal-overlay.open { display:flex; }
+.chart-modal-box { background:#0d0d1f; border:1px solid rgba(191,0,255,0.25); border-radius:20px; width:100%; max-width:860px; max-height:90vh; overflow-y:auto; animation:slideUp 0.3s ease; }
+.chart-modal-header { padding:24px 28px 0; display:flex; align-items:center; justify-content:space-between; }
+.chart-modal-header h2 { font-size:18px; color:var(--text); }
+.modal-close { width:32px; height:32px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid var(--border); cursor:pointer; color:var(--text-dim); font-size:18px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+.modal-close:hover { border-color:var(--neon-red); color:var(--neon-red); }
+.chart-wrap { padding:24px 28px; }
+.chart-canvas-wrap { position:relative; height:260px; margin-bottom:24px; }
+.modal-table-wrap { overflow-x:auto; }
+.modal-table { width:100%; border-collapse:collapse; font-size:13px; }
+.modal-table th { padding:10px 14px; font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.7px; background:rgba(255,255,255,0.03); border-bottom:1px solid var(--border); text-align:left; }
+.modal-table td { padding:10px 14px; color:var(--text-dim); border-bottom:1px solid rgba(255,255,255,0.04); }
+.modal-table tr:last-child td { border-bottom:none; }
+.num { font-family:'Syne',sans-serif; font-weight:700; }
+.num.blue { color:var(--neon-blue); } .num.orange { color:var(--neon-orange); }
+.num.cyan { color:var(--neon-cyan); } .num.green { color:var(--neon-green); }
 
-@media(max-width:768px) {
-  .topbar { padding: 12px 16px; }
-  .content { padding: 16px; }
-  .table-header { padding: 14px 16px; }
-  th, td { padding: 10px 12px; }
-  .search-input { width: 140px; }
-  .stat-value { font-size: 22px; }
-}
+@media(max-width:768px){ .topbar { padding:12px 16px; } .content { padding:16px; } .stat-value { font-size:22px; } }
 </style>
 </head>
 <body>
@@ -309,8 +159,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
     </div>
     <div class="form-group">
       <label class="form-label">Password Admin</label>
-      <input class="form-input" type="password" id="adminPass" placeholder="••••••••"
-        onkeydown="if(event.key==='Enter') doLogin()">
+      <input class="form-input" type="password" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter') doLogin()">
     </div>
     <button class="btn-login" id="btnLogin" onclick="doLogin()">Masuk</button>
     <div class="err-login" id="errLogin">Password salah. Coba lagi.</div>
@@ -332,27 +181,12 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 
   <div class="content">
     <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-label">Total Pendaftar</div>
-        <div class="stat-value blue" id="statTotal">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Menunggu</div>
-        <div class="stat-value orange" id="statMenunggu">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Aktif (Berbayar)</div>
-        <div class="stat-value green" id="statAktif">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Trial Aktif</div>
-        <div class="stat-value cyan" id="statTrialAktif">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Trial Nonaktif</div>
-        <div class="stat-value red" id="statTrialNonaktif">—</div>
-      </div>
-      <div class="stat-card clickable" id="cardHariIni" onclick="openModal()">
+      <div class="stat-card"><div class="stat-label">Total Pendaftar</div><div class="stat-value blue" id="statTotal">—</div></div>
+      <div class="stat-card"><div class="stat-label">Menunggu</div><div class="stat-value orange" id="statMenunggu">—</div></div>
+      <div class="stat-card"><div class="stat-label">Aktif (Berbayar)</div><div class="stat-value green" id="statAktif">—</div></div>
+      <div class="stat-card"><div class="stat-label">Trial Aktif</div><div class="stat-value cyan" id="statTrialAktif">—</div></div>
+      <div class="stat-card"><div class="stat-label">Trial Nonaktif</div><div class="stat-value red" id="statTrialNonaktif">—</div></div>
+      <div class="stat-card clickable" onclick="openChartModal()">
         <div class="stat-label">Daftar Hari Ini</div>
         <div class="stat-value purple" id="statHariIni">—</div>
       </div>
@@ -362,26 +196,28 @@ tr:hover td { background: rgba(255,255,255,0.02); }
       <div class="table-header">
         <h2>Data Pendaftar</h2>
         <div class="table-actions">
-          <input class="search-input" type="text" placeholder="Cari nama / email..." oninput="filterTable(this.value)">
+          <input class="search-input" type="text" placeholder="Cari nama / email / subdomain..." oninput="filterTable(this.value)">
           <button class="btn-refresh" onclick="loadData()">↻ Refresh</button>
         </div>
       </div>
       <div class="table-wrap">
-        <table id="dataTable">
+        <table>
           <thead>
             <tr>
               <th>#</th>
-              <th>Nama</th>
-              <th>Email</th>
-              <th>Nomor WA</th>
+              <th>Nama & Kontak</th>
               <th>Subdomain</th>
-              <th>Template</th>
               <th>Status</th>
+              <th>Paket & Server</th>
+              <th>Durasi</th>
+              <th>Kupon</th>
+              <th>Total</th>
               <th>Tanggal Daftar</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody id="tableBody">
-            <tr><td colspan="8" class="loading-state">Memuat data...</td></tr>
+            <tr><td colspan="10" class="loading-state">Memuat data...</td></tr>
           </tbody>
         </table>
       </div>
@@ -389,46 +225,49 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   </div>
 </div>
 
-<!-- Modal: Grafik Harian -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+<!-- Modal Konfirmasi Delete -->
+<div class="modal-overlay" id="deleteModal">
   <div class="modal-box">
-    <div class="modal-header">
+    <div class="modal-icon">🗑️</div>
+    <h3>Hapus Data?</h3>
+    <p id="deleteModalMsg">Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.</p>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeDeleteModal()">Batal</button>
+      <button class="btn-confirm-delete" id="btnConfirmDelete" onclick="eksekusiDelete()">Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Chart Harian -->
+<div class="chart-modal-overlay" id="chartModal" onclick="closeChartOutside(event)">
+  <div class="chart-modal-box">
+    <div class="chart-modal-header">
       <h2>📊 Statistik Pendaftaran Harian</h2>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-close" onclick="closeChartModal()">✕</button>
     </div>
     <div class="chart-wrap">
-      <div class="chart-canvas-wrap">
-        <canvas id="chartHarian"></canvas>
-      </div>
+      <div class="chart-canvas-wrap"><canvas id="chartHarian"></canvas></div>
       <div class="modal-table-wrap">
-        <table class="modal-table" id="tabelHarian">
-          <thead>
-            <tr>
-              <th>Tanggal</th>
-              <th>Total Daftar</th>
-              <th>Menunggu</th>
-              <th>Trial</th>
-              <th>Berbayar</th>
-            </tr>
-          </thead>
-          <tbody id="tabelHarianBody">
-          </tbody>
+        <table class="modal-table">
+          <thead><tr><th>Tanggal</th><th>Total Daftar</th><th>Menunggu</th><th>Trial</th><th>Berbayar</th></tr></thead>
+          <tbody id="tabelHarianBody"></tbody>
         </table>
       </div>
-      <div class="modal-bottom-pad"></div>
+      <div style="height:24px"></div>
     </div>
   </div>
 </div>
 
 <script>
 const API_URL = 'https://api.chanceupme.com';
-const templateNames = {
-  '1':'Neon Dark','2':'Fresh Green','3':'Bold Red',
-  '4':'Royal Purple','5':'Ocean Blue','6':'Golden Hour'
-};
+const templateNames = { '1':'Neon Dark','2':'Fresh Green','3':'Bold Red','4':'Royal Purple','5':'Ocean Blue','6':'Golden Hour' };
+const HARGA = { elegant: 49000, futuristic: 97000 };
+const HARGA_SERVER = { startup: 0, unicorn: 100000, phoenix: 300000 };
+const DURASI_BULAN = { '3bulan': 3, '1tahun': 14 };
 
 let allData = [];
 let sessionToken = null;
+let deleteTargetId = null;
 let chartInstance = null;
 
 // ── Auth ──
@@ -440,8 +279,7 @@ async function doLogin() {
   document.getElementById('errLogin').style.display = 'none';
   try {
     const res = await fetch(`${API_URL}/admin/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ password: pass })
     });
     const data = await res.json();
@@ -470,11 +308,9 @@ function doLogout() {
 
 // ── Load Data ──
 async function loadData() {
-  document.getElementById('tableBody').innerHTML = '<tr><td colspan="8" class="loading-state">Memuat data...</td></tr>';
+  document.getElementById('tableBody').innerHTML = '<tr><td colspan="10" class="loading-state">Memuat data...</td></tr>';
   try {
-    const res = await fetch(`${API_URL}/admin/pendaftar`, {
-      headers: { 'x-admin-token': sessionToken }
-    });
+    const res = await fetch(`${API_URL}/admin/pendaftar`, { headers:{'x-admin-token': sessionToken} });
     if (res.status === 401) { doLogout(); return; }
     const data = await res.json();
     allData = data.pendaftar || [];
@@ -482,64 +318,87 @@ async function loadData() {
     updateStats(allData);
     document.getElementById('lastUpdate').textContent = 'Update: ' + new Date().toLocaleTimeString('id-ID');
   } catch(e) {
-    document.getElementById('tableBody').innerHTML = '<tr><td colspan="8" class="empty-state"><div>⚠️</div>Gagal memuat data. Coba refresh.</td></tr>';
+    document.getElementById('tableBody').innerHTML = '<tr><td colspan="10" class="empty-state"><div>⚠️</div>Gagal memuat data.</td></tr>';
   }
+}
+
+// ── Render Status Badge ──
+function renderStatus(r) {
+  const now = new Date();
+  if (r.status === 'aktif') return `<span class="badge badge-aktif">✓ Aktif</span>`;
+  if (r.status === 'trial') {
+    const exp = r.reserved_hingga && new Date(r.reserved_hingga) < now;
+    return exp
+      ? `<span class="badge badge-trial-expired">⏰ Trial Habis</span>`
+      : `<span class="badge badge-trial">✦ Trial Aktif</span>`;
+  }
+  if (r.status === 'nonaktif') return `<span class="badge badge-nonaktif">✕ Nonaktif</span>`;
+  if (r.status === 'menunggu') {
+    // Bedakan sesi1 vs sesi2
+    if (!r.paket_tipe) return `<span class="badge badge-tunggu-sesi1">⏳ Menunggu Sesi 1</span>`;
+    if (r.mayar_invoice_id) return `<span class="badge badge-tunggu-bayar">💳 Menunggu Bayar</span>`;
+    return `<span class="badge badge-tunggu-sesi2">📋 Menunggu Sesi 2</span>`;
+  }
+  return `<span class="badge badge-nonaktif">${r.status}</span>`;
+}
+
+// ── Hitung Total ──
+function hitungTotal(r) {
+  if (!r.paket_tipe || !r.server_option || !r.durasi) return null;
+  const perBulan = (HARGA[r.paket_tipe] || 0) + (HARGA_SERVER[r.server_option] || 0);
+  return perBulan * (DURASI_BULAN[r.durasi] || 3);
 }
 
 // ── Render Table ──
 function renderTable(data) {
   if (data.length === 0) {
-    document.getElementById('tableBody').innerHTML = '<tr><td colspan="8" class="empty-state"><div>📭</div>Belum ada pendaftar</td></tr>';
+    document.getElementById('tableBody').innerHTML = '<tr><td colspan="10" class="empty-state"><div>📭</div>Belum ada pendaftar</td></tr>';
     return;
   }
-  document.getElementById('tableBody').innerHTML = data.map(r => `
-    <tr>
+  document.getElementById('tableBody').innerHTML = data.map(r => {
+    const total = hitungTotal(r);
+    const totalStr = r.status === 'trial' ? '<span style="color:var(--neon-green);font-weight:700">Rp0 (Trial)</span>'
+      : total !== null ? `<span style="color:var(--neon-blue);font-weight:700">Rp${total.toLocaleString('id-ID')}</span>`
+      : '<span style="color:var(--text-muted)">—</span>';
+
+    const paketInfo = r.paket_tipe ? `
+      <div class="paket-info">
+        <div class="paket-info-row">Paket: <span>${r.paket_tipe === 'elegant' ? '✨ Elegant' : '🚀 Futuristic'}</span></div>
+        <div class="paket-info-row">Server: <span>${r.server_option === 'startup' ? '🌱 Startup' : r.server_option === 'unicorn' ? '🦄 Unicorn' : '🔥 Phoenix'}</span></div>
+      </div>` : '<span style="color:var(--text-muted)">—</span>';
+
+    const durasiStr = r.durasi ? (r.durasi === '3bulan' ? '3 Bulan' : '1 Tahun') : '—';
+    const kuponStr = r.kode_kupon ? `<span class="kupon-tag">${r.kode_kupon}</span>` : '<span style="color:var(--text-muted)">—</span>';
+
+    return `<tr>
       <td style="color:var(--text-muted)">${r.id}</td>
-      <td class="td-nama">${r.nama}</td>
-      <td>${r.email}</td>
-      <td class="td-phone">${formatPhone(r.phone)}</td>
+      <td>
+        <div class="td-nama">${r.nama}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:2px">${r.email}</div>
+        <div class="td-phone" style="margin-top:2px">${formatPhone(r.phone)}</div>
+      </td>
       <td class="td-subdomain">${r.subdomain}.tokosaya.id</td>
-      <td><span class="template-tag">${templateNames[r.template] || r.template}</span></td>
-      <td>${renderBadge(r)}</td>
+      <td>${renderStatus(r)}</td>
+      <td>${paketInfo}</td>
+      <td style="font-size:11px">${durasiStr}</td>
+      <td>${kuponStr}</td>
+      <td>${totalStr}</td>
       <td class="td-date">${formatDate(r.dibuat_pada)}</td>
-    </tr>
-  `).join('');
+      <td><button class="btn-delete" onclick="konfirmasiDelete(${r.id}, '${r.nama}', '${r.subdomain}')">🗑️ Hapus</button></td>
+    </tr>`;
+  }).join('');
 }
 
-function renderBadge(r) {
-  const now = new Date();
-  if (r.status === 'trial') {
-    const expired = r.reserved_hingga && new Date(r.reserved_hingga) < now;
-    if (expired) return `<span class="badge badge-expired">⏰ Trial Habis</span>`;
-    return `<span class="badge badge-trial">✦ Trial Aktif</span>`;
-  }
-  const labels = {
-    menunggu: `<span class="badge badge-menunggu">⏳ Menunggu</span>`,
-    aktif:    `<span class="badge badge-aktif">✓ Aktif</span>`,
-    nonaktif: `<span class="badge badge-nonaktif">✕ Nonaktif</span>`,
-    expired:  `<span class="badge badge-expired">⏰ Expired</span>`,
-  };
-  return labels[r.status] || `<span class="badge badge-nonaktif">${r.status}</span>`;
-}
-
-// ── Update Stats ──
+// ── Stats ──
 function updateStats(data) {
   const today = new Date().toDateString();
-  const now   = new Date();
-
-  const total       = data.length;
-  const menunggu    = data.filter(r => r.status === 'menunggu').length;
-  const aktif       = data.filter(r => r.status === 'aktif').length;
-  const trialAktif  = data.filter(r => r.status === 'trial' && (!r.reserved_hingga || new Date(r.reserved_hingga) >= now)).length;
-  const trialExpired= data.filter(r => r.status === 'trial' && r.reserved_hingga && new Date(r.reserved_hingga) < now).length;
-  const hariIni     = data.filter(r => new Date(r.dibuat_pada).toDateString() === today).length;
-
-  document.getElementById('statTotal').textContent        = total;
-  document.getElementById('statMenunggu').textContent     = menunggu;
-  document.getElementById('statAktif').textContent        = aktif;
-  document.getElementById('statTrialAktif').textContent   = trialAktif;
-  document.getElementById('statTrialNonaktif').textContent= trialExpired;
-  document.getElementById('statHariIni').textContent      = hariIni;
+  const now = new Date();
+  document.getElementById('statTotal').textContent = data.length;
+  document.getElementById('statMenunggu').textContent = data.filter(r => r.status === 'menunggu').length;
+  document.getElementById('statAktif').textContent = data.filter(r => r.status === 'aktif').length;
+  document.getElementById('statTrialAktif').textContent = data.filter(r => r.status === 'trial' && (!r.reserved_hingga || new Date(r.reserved_hingga) >= now)).length;
+  document.getElementById('statTrialNonaktif').textContent = data.filter(r => r.status === 'trial' && r.reserved_hingga && new Date(r.reserved_hingga) < now).length;
+  document.getElementById('statHariIni').textContent = data.filter(r => new Date(r.dibuat_pada).toDateString() === today).length;
 }
 
 // ── Filter ──
@@ -552,54 +411,74 @@ function filterTable(q) {
   renderTable(filtered);
 }
 
-// ── Modal Chart ──
-function openModal() {
-  document.getElementById('modalOverlay').classList.add('open');
-  renderChart();
-}
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-}
-function closeModalOutside(e) {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
+// ── Delete ──
+function konfirmasiDelete(id, nama, subdomain) {
+  deleteTargetId = id;
+  document.getElementById('deleteModalMsg').innerHTML =
+    `Apakah Anda yakin ingin menghapus data:<br><strong>${nama}</strong> (${subdomain}.tokosaya.id)?<br><br>
+    <span style="color:var(--neon-red);font-size:12px">⚠️ Tindakan ini tidak dapat dibatalkan.</span>`;
+  document.getElementById('deleteModal').classList.add('open');
 }
 
+function closeDeleteModal() {
+  deleteTargetId = null;
+  document.getElementById('deleteModal').classList.remove('open');
+}
+
+async function eksekusiDelete() {
+  if (!deleteTargetId) return;
+  const btn = document.getElementById('btnConfirmDelete');
+  btn.disabled = true; btn.textContent = 'Menghapus...';
+  try {
+    const res = await fetch(`${API_URL}/admin/pendaftar/${deleteTargetId}`, {
+      method: 'DELETE',
+      headers: { 'x-admin-token': sessionToken }
+    });
+    if (res.status === 401) { doLogout(); return; }
+    const data = await res.json();
+    if (data.success) {
+      closeDeleteModal();
+      loadData();
+    } else {
+      alert('Gagal menghapus: ' + (data.error || 'Coba lagi'));
+    }
+  } catch(e) {
+    alert('Gagal terhubung ke server.');
+  }
+  btn.disabled = false; btn.textContent = 'Ya, Hapus';
+}
+
+// ── Chart Modal ──
+function openChartModal() {
+  document.getElementById('chartModal').classList.add('open');
+  renderChart();
+}
+function closeChartModal() { document.getElementById('chartModal').classList.remove('open'); }
+function closeChartOutside(e) { if (e.target === document.getElementById('chartModal')) closeChartModal(); }
+
 function renderChart() {
-  // Kelompokkan data per hari (30 hari terakhir)
   const days = {};
   const now = new Date();
   for (let i = 29; i >= 0; i--) {
-    const d = new Date(now);
-    d.setDate(d.getDate() - i);
-    const key = d.toISOString().slice(0, 10);
-    days[key] = { total: 0, menunggu: 0, trial: 0, aktif: 0 };
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0,10);
+    days[key] = { total:0, menunggu:0, trial:0, aktif:0 };
   }
-
   allData.forEach(r => {
-    const key = new Date(r.dibuat_pada).toISOString().slice(0, 10);
+    const key = new Date(r.dibuat_pada).toISOString().slice(0,10);
     if (!days[key]) return;
     days[key].total++;
     if (r.status === 'menunggu') days[key].menunggu++;
     else if (r.status === 'trial') days[key].trial++;
     else if (r.status === 'aktif') days[key].aktif++;
   });
+  const labels = Object.keys(days).map(d => new Date(d).toLocaleDateString('id-ID',{day:'2-digit',month:'short'}));
 
-  const labels = Object.keys(days).map(d => {
-    const dt = new Date(d);
-    return dt.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' });
-  });
-  const totalData    = Object.values(days).map(d => d.total);
-  const menungguData = Object.values(days).map(d => d.menunggu);
-  const trialData    = Object.values(days).map(d => d.trial);
-  const aktifData    = Object.values(days).map(d => d.aktif);
-
-  // Tabel harian
   const tbody = document.getElementById('tabelHarianBody');
-  const keys  = Object.keys(days).reverse();
-  tbody.innerHTML = keys.map(key => {
-    const d  = days[key];
-    const dt = new Date(key).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+  tbody.innerHTML = Object.keys(days).reverse().map(key => {
+    const d = days[key];
     if (d.total === 0) return '';
+    const dt = new Date(key).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
     return `<tr>
       <td style="color:var(--text)">${dt}</td>
       <td><span class="num blue">${d.total}</span></td>
@@ -609,74 +488,28 @@ function renderChart() {
     </tr>`;
   }).filter(Boolean).join('') || `<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:20px">Belum ada data</td></tr>`;
 
-  // Chart
   if (chartInstance) chartInstance.destroy();
   const ctx = document.getElementById('chartHarian').getContext('2d');
   chartInstance = new Chart(ctx, {
-    type: 'bar',
+    type:'bar',
     data: {
       labels,
       datasets: [
-        {
-          label: 'Total',
-          data: totalData,
-          backgroundColor: 'rgba(0,212,255,0.15)',
-          borderColor: 'rgba(0,212,255,0.7)',
-          borderWidth: 1.5,
-          borderRadius: 4,
-        },
-        {
-          label: 'Menunggu',
-          data: menungguData,
-          backgroundColor: 'rgba(255,140,0,0.3)',
-          borderColor: 'rgba(255,140,0,0.8)',
-          borderWidth: 1.5,
-          borderRadius: 4,
-        },
-        {
-          label: 'Trial',
-          data: trialData,
-          backgroundColor: 'rgba(0,255,224,0.2)',
-          borderColor: 'rgba(0,255,224,0.7)',
-          borderWidth: 1.5,
-          borderRadius: 4,
-        },
-        {
-          label: 'Berbayar',
-          data: aktifData,
-          backgroundColor: 'rgba(0,255,148,0.2)',
-          borderColor: 'rgba(0,255,148,0.7)',
-          borderWidth: 1.5,
-          borderRadius: 4,
-        },
+        { label:'Total', data:Object.values(days).map(d=>d.total), backgroundColor:'rgba(0,212,255,0.15)', borderColor:'rgba(0,212,255,0.7)', borderWidth:1.5, borderRadius:4 },
+        { label:'Menunggu', data:Object.values(days).map(d=>d.menunggu), backgroundColor:'rgba(255,140,0,0.3)', borderColor:'rgba(255,140,0,0.8)', borderWidth:1.5, borderRadius:4 },
+        { label:'Trial', data:Object.values(days).map(d=>d.trial), backgroundColor:'rgba(0,255,224,0.2)', borderColor:'rgba(0,255,224,0.7)', borderWidth:1.5, borderRadius:4 },
+        { label:'Berbayar', data:Object.values(days).map(d=>d.aktif), backgroundColor:'rgba(0,255,148,0.2)', borderColor:'rgba(0,255,148,0.7)', borderWidth:1.5, borderRadius:4 },
       ]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      responsive:true, maintainAspectRatio:false,
       plugins: {
-        legend: {
-          labels: { color: '#8888aa', font: { family: 'DM Sans', size: 12 }, boxWidth: 12, padding: 16 }
-        },
-        tooltip: {
-          backgroundColor: '#0d0d1f',
-          borderColor: 'rgba(255,255,255,0.1)',
-          borderWidth: 1,
-          titleColor: '#f0f0ff',
-          bodyColor: '#8888aa',
-          padding: 12,
-        }
+        legend: { labels:{ color:'#8888aa', font:{family:'DM Sans',size:12}, boxWidth:12, padding:16 } },
+        tooltip: { backgroundColor:'#0d0d1f', borderColor:'rgba(255,255,255,0.1)', borderWidth:1, titleColor:'#f0f0ff', bodyColor:'#8888aa', padding:12 }
       },
       scales: {
-        x: {
-          ticks: { color: '#555577', font: { size: 11 }, maxTicksLimit: 14 },
-          grid:  { color: 'rgba(255,255,255,0.04)' },
-        },
-        y: {
-          ticks: { color: '#555577', font: { size: 11 }, stepSize: 1 },
-          grid:  { color: 'rgba(255,255,255,0.04)' },
-          beginAtZero: true,
-        }
+        x: { ticks:{color:'#555577',font:{size:11},maxTicksLimit:14}, grid:{color:'rgba(255,255,255,0.04)'} },
+        y: { ticks:{color:'#555577',font:{size:11},stepSize:1}, grid:{color:'rgba(255,255,255,0.04)'}, beginAtZero:true }
       }
     }
   });
@@ -684,14 +517,11 @@ function renderChart() {
 
 // ── Helpers ──
 function formatPhone(phone) {
-  const p = phone.replace('62', '0');
-  return p.replace(/(\d{4})(\d{4})(\d+)/, '$1-$2-$3');
+  const p = phone.replace('62','0');
+  return p.replace(/(\d{4})(\d{4})(\d+)/,'$1-$2-$3');
 }
 function formatDate(d) {
-  return new Date(d).toLocaleString('id-ID', {
-    day: '2-digit', month: 'short', year: 'numeric',
-    hour: '2-digit', minute: '2-digit'
-  });
+  return new Date(d).toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
 }
 </script>
 </body>
