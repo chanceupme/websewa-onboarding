@@ -15,8 +15,6 @@
   --neon-orange: #FF8C00;
   --neon-gold: #FFD700;
   --bg: #060612;
-  --bg2: #0d0d1f;
-  --bg3: #12122a;
   --border: rgba(255,255,255,0.08);
   --text: #f0f0ff;
   --text-dim: #8888aa;
@@ -29,16 +27,13 @@
 html { scroll-behavior:smooth; }
 body {
   font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; overflow-x: hidden;
 }
 h1,h2,h3,h4 { font-family: 'Syne', sans-serif; }
 
 body::before {
-  content:'';
-  position:fixed; inset:0; z-index:0; pointer-events:none;
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   opacity: 0.4;
 }
@@ -49,38 +44,37 @@ body::before {
 }
 .ambient span:nth-child(1) { width:700px; height:700px; background:var(--neon-blue); top:-300px; left:-200px; }
 .ambient span:nth-child(2) { width:500px; height:500px; background:var(--neon-purple); bottom:-200px; right:-150px; animation-delay:-5s; }
-.ambient span:nth-child(3) { width:350px; height:350px; background:var(--neon-gold); top:50%; left:50%; animation-delay:-9s; }
+.ambient span:nth-child(3) { width:350px; height:350px; background:var(--neon-gold); top:40%; left:40%; animation-delay:-9s; }
 @keyframes drift { from{transform:translate(0,0) scale(1);} to{transform:translate(40px,30px) scale(1.1);} }
 
 .page-wrap {
   position:relative; z-index:10;
-  min-height:100vh;
-  display:flex; flex-direction:column; align-items:center;
-  padding: 40px 20px 80px;
+  min-height:100vh; display:flex; flex-direction:column; align-items:center;
+  padding: 32px 20px 80px;
 }
 .top-bar {
-  width:100%; max-width:900px;
+  width:100%; max-width:860px;
   display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:32px;
+  margin-bottom:24px;
 }
 .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
 .logo-icon {
-  width:38px; height:38px; border-radius:10px;
+  width:36px; height:36px; border-radius:10px;
   background:linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
   display:flex; align-items:center; justify-content:center;
-  font-family:'Syne',sans-serif; font-weight:800; font-size:16px; color:#fff;
+  font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:#fff;
   box-shadow:var(--glow-blue);
 }
-.logo-name { font-family:'Syne',sans-serif; font-weight:700; font-size:17px; color:var(--text); }
+.logo-name { font-family:'Syne',sans-serif; font-weight:700; font-size:16px; color:var(--text); }
 
-/* Progress */
+/* Progress bar */
 .progress-track {
-  width:100%; max-width:900px; height:3px;
+  width:100%; max-width:860px; height:3px;
   background:rgba(255,255,255,0.06); border-radius:2px;
-  margin-bottom:32px; overflow:hidden;
+  margin-bottom:28px; overflow:hidden;
 }
 .progress-fill {
-  height:100%; width:0%;
+  height:100%; width:20%;
   background:linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
   border-radius:2px; transition:width 0.5s cubic-bezier(0.4,0,0.2,1);
   box-shadow:0 0 10px rgba(0,212,255,0.5);
@@ -88,9 +82,8 @@ body::before {
 
 /* Step indicator */
 .step-indicator {
-  width:100%; max-width:700px;
-  display:flex; align-items:center;
-  margin-bottom:40px;
+  width:100%; max-width:560px;
+  display:flex; align-items:center; margin-bottom:32px;
 }
 .step-item { display:flex; align-items:center; gap:8px; flex:1; }
 .step-item:last-child { flex:none; }
@@ -104,7 +97,7 @@ body::before {
 .step-dot.active { border-color:var(--neon-blue); color:var(--neon-blue); box-shadow:var(--glow-blue); background:rgba(0,212,255,0.08); }
 .step-dot.done { border-color:var(--neon-green); background:rgba(0,255,148,0.1); color:var(--neon-green); }
 .step-dot.done::after { content:'✓'; font-size:13px; }
-.step-label { font-size:11px; color:var(--text-muted); white-space:nowrap; transition:color 0.3s; }
+.step-label { font-size:11px; color:var(--text-muted); transition:color 0.3s; }
 .step-item.active .step-label { color:var(--text-dim); }
 .step-item.done .step-label { color:var(--neon-green); }
 .step-line { flex:1; height:1px; background:var(--border); margin:0 6px; transition:background 0.3s; }
@@ -112,181 +105,219 @@ body::before {
 
 /* Card */
 .card {
-  width:100%; max-width:900px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid var(--border); border-radius:20px;
-  padding:40px; backdrop-filter:blur(20px);
+  width:100%; max-width:860px;
+  background:rgba(255,255,255,0.03); border:1px solid var(--border);
+  border-radius:20px; padding:36px; backdrop-filter:blur(20px);
   animation:fadeUp 0.4s ease both;
 }
-@keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:translateY(0);} }
 .step-panel { display:none; }
 .step-panel.active { display:block; }
-.step-title { font-size:22px; font-weight:700; color:var(--text); margin-bottom:6px; }
-.step-sub { font-size:14px; color:var(--text-dim); margin-bottom:28px; line-height:1.6; }
+.step-title { font-size:20px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.step-sub { font-size:13px; color:var(--text-dim); margin-bottom:24px; line-height:1.6; }
+
+/* User bar */
+.user-bar {
+  background:rgba(255,255,255,0.03); border:1px solid var(--border);
+  border-radius:10px; padding:10px 14px; margin-bottom:20px;
+  display:flex; gap:20px; flex-wrap:wrap;
+}
+.user-bar-item { display:flex; flex-direction:column; gap:1px; }
+.user-bar-key { font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; }
+.user-bar-val { font-size:13px; color:var(--neon-blue); font-weight:500; }
+
+/* ── KUPON BOX ── */
+.kupon-box {
+  background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15);
+  border-radius:14px; padding:22px; margin-bottom:20px;
+}
+.kupon-box h3 { font-size:15px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.kupon-box p { font-size:13px; color:var(--text-dim); margin-bottom:14px; }
+.kupon-row { display:flex; gap:10px; }
+.kupon-input {
+  flex:1; padding:12px 14px;
+  background:rgba(255,255,255,0.05); border:1.5px solid var(--border);
+  border-radius:10px; outline:none;
+  font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text);
+  text-transform:uppercase; letter-spacing:1px; transition:border-color 0.25s;
+}
+.kupon-input:focus { border-color:rgba(0,212,255,0.4); }
+.kupon-input.valid { border-color:rgba(0,255,148,0.5); }
+.kupon-input.invalid { border-color:rgba(255,68,102,0.4); }
+.btn-kupon {
+  padding:12px 18px;
+  background:rgba(0,212,255,0.1); border:1.5px solid rgba(0,212,255,0.3);
+  border-radius:10px; cursor:pointer;
+  font-family:'Syne',sans-serif; font-weight:700; font-size:13px; color:var(--neon-blue);
+  transition:all 0.2s; white-space:nowrap;
+}
+.btn-kupon:hover { background:rgba(0,212,255,0.18); }
+.btn-kupon:disabled { opacity:0.5; pointer-events:none; }
+
+/* Kupon result */
+.kupon-result { margin-top:12px; border-radius:12px; padding:14px 16px; display:none; }
+.kupon-result.ok { background:rgba(0,255,148,0.07); border:1px solid rgba(0,255,148,0.2); }
+.kupon-result.err { background:rgba(255,68,102,0.07); border:1px solid rgba(255,68,102,0.2); }
+.kupon-result-title { font-family:'Syne',sans-serif; font-weight:700; font-size:14px; margin-bottom:8px; }
+.kupon-result.ok .kupon-result-title { color:var(--neon-green); }
+.kupon-result.err .kupon-result-title { color:var(--neon-red); }
+.kupon-syarat { font-size:12px; color:var(--text-dim); line-height:1.8; }
+.kupon-syarat li { margin-left:16px; }
+
+/* Kupon hint bar — muncul di step 2,3,4 kalau ada kupon aktif */
+.kupon-hint {
+  display:none;
+  padding:10px 14px; border-radius:10px; margin-bottom:16px;
+  background:rgba(0,212,255,0.06); border:1px solid rgba(0,212,255,0.2);
+  font-size:12px; color:var(--text-dim); line-height:1.6;
+}
+.kupon-hint.show { display:block; }
+.kupon-hint strong { color:var(--neon-blue); }
+
+/* Kupon warning — muncul kalau pilihan tidak sesuai kupon */
+.kupon-warning {
+  display:none;
+  padding:12px 14px; border-radius:10px; margin-top:12px;
+  background:rgba(255,140,0,0.08); border:1px solid rgba(255,140,0,0.25);
+  font-size:13px; color:var(--neon-orange);
+}
+.kupon-warning.show { display:block; }
 
 /* Paket cards */
-.paket-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:28px; }
+.paket-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px; }
 @media(max-width:560px){ .paket-grid { grid-template-columns:1fr; } }
-
 .paket-card {
   border:2px solid var(--border); border-radius:16px;
-  padding:24px; cursor:pointer; transition:all 0.25s;
+  padding:22px; cursor:pointer; transition:all 0.25s;
   position:relative; overflow:hidden;
 }
-.paket-card:hover { border-color:rgba(0,212,255,0.25); transform:translateY(-2px); }
+.paket-card:hover:not(.disabled-card) { border-color:rgba(0,212,255,0.25); transform:translateY(-2px); }
 .paket-card.selected { border-color:var(--neon-blue); box-shadow:var(--glow-blue); background:rgba(0,212,255,0.05); }
 .paket-card.selected-gold { border-color:var(--neon-gold); box-shadow:var(--glow-gold); background:rgba(255,215,0,0.04); }
-
+.paket-card.disabled-card { opacity:0.45; cursor:not-allowed; }
 .paket-badge {
-  position:absolute; top:12px; right:12px;
-  padding:3px 10px; border-radius:20px;
-  font-size:11px; font-weight:700; font-family:'Syne',sans-serif;
+  position:absolute; top:10px; right:10px;
+  padding:3px 9px; border-radius:20px;
+  font-size:10px; font-weight:700; font-family:'Syne',sans-serif;
 }
 .badge-blue { background:var(--neon-blue); color:#000; }
 .badge-gold { background:var(--neon-gold); color:#000; }
-
-.paket-icon { font-size:32px; margin-bottom:12px; }
-.paket-nama { font-family:'Syne',sans-serif; font-weight:800; font-size:20px; margin-bottom:6px; }
+.paket-icon { font-size:28px; margin-bottom:10px; }
+.paket-nama { font-family:'Syne',sans-serif; font-weight:800; font-size:18px; margin-bottom:4px; }
 .paket-nama.blue { color:var(--neon-blue); }
 .paket-nama.gold { color:var(--neon-gold); }
-.paket-desc { font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:14px; }
-.paket-harga { font-family:'Syne',sans-serif; font-weight:700; font-size:24px; color:var(--text); }
-.paket-harga span { font-size:13px; font-weight:400; color:var(--text-dim); }
-.paket-fitur { margin-top:14px; display:flex; flex-direction:column; gap:6px; }
-.paket-fitur-item { font-size:12px; color:var(--text-dim); display:flex; align-items:center; gap:8px; }
+.paket-desc { font-size:12px; color:var(--text-dim); line-height:1.5; margin-bottom:12px; }
+.paket-harga { font-family:'Syne',sans-serif; font-weight:700; font-size:20px; color:var(--text); }
+.paket-harga span { font-size:12px; font-weight:400; color:var(--text-dim); }
+.paket-fitur { margin-top:12px; display:flex; flex-direction:column; gap:5px; }
+.paket-fitur-item { font-size:11px; color:var(--text-dim); display:flex; align-items:center; gap:7px; }
 .paket-fitur-item::before { content:'✓'; color:var(--neon-green); font-weight:700; flex-shrink:0; }
 
 /* Server cards */
-.server-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:28px; }
-@media(max-width:600px){ .server-grid { grid-template-columns:1fr; } }
-
+.server-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+@media(max-width:580px){ .server-grid { grid-template-columns:1fr; } }
 .server-card {
   border:2px solid var(--border); border-radius:14px;
-  padding:20px 16px; cursor:pointer; transition:all 0.25s;
-  position:relative;
+  padding:18px 14px; cursor:pointer; transition:all 0.25s; position:relative;
 }
-.server-card:hover { border-color:rgba(0,212,255,0.25); transform:translateY(-2px); }
+.server-card:hover:not(.disabled-card) { border-color:rgba(0,212,255,0.25); transform:translateY(-2px); }
 .server-card.selected { border-color:var(--neon-blue); box-shadow:var(--glow-blue); background:rgba(0,212,255,0.05); }
-.server-icon { font-size:28px; margin-bottom:10px; }
-.server-nama { font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text); margin-bottom:4px; }
-.server-desc { font-size:12px; color:var(--text-dim); line-height:1.5; margin-bottom:10px; }
-.server-tambahan { font-family:'Syne',sans-serif; font-weight:700; font-size:14px; }
+.server-card.disabled-card { opacity:0.45; cursor:not-allowed; }
+.server-icon { font-size:26px; margin-bottom:8px; }
+.server-nama { font-family:'Syne',sans-serif; font-weight:700; font-size:14px; color:var(--text); margin-bottom:4px; }
+.server-desc { font-size:11px; color:var(--text-dim); line-height:1.4; margin-bottom:8px; }
+.server-tambahan { font-family:'Syne',sans-serif; font-weight:700; font-size:13px; }
 .server-tambahan.gratis { color:var(--neon-green); }
 .server-tambahan.berbayar { color:var(--neon-orange); }
 
-/* Durasi */
-.durasi-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:28px; }
+/* Durasi cards */
+.durasi-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
 @media(max-width:480px){ .durasi-grid { grid-template-columns:1fr; } }
-
 .durasi-card {
   border:2px solid var(--border); border-radius:14px;
-  padding:22px 20px; cursor:pointer; transition:all 0.25s;
-  position:relative;
+  padding:20px 18px; cursor:pointer; transition:all 0.25s; position:relative;
 }
-.durasi-card:hover { border-color:rgba(0,212,255,0.25); transform:translateY(-2px); }
+.durasi-card:hover:not(.disabled-card) { border-color:rgba(0,212,255,0.25); transform:translateY(-2px); }
 .durasi-card.selected { border-color:var(--neon-blue); box-shadow:var(--glow-blue); background:rgba(0,212,255,0.05); }
-.durasi-label { font-family:'Syne',sans-serif; font-weight:800; font-size:18px; color:var(--text); margin-bottom:4px; }
-.durasi-desc { font-size:13px; color:var(--text-dim); margin-bottom:10px; }
-.durasi-harga { font-family:'Syne',sans-serif; font-weight:700; font-size:22px; color:var(--neon-blue); }
-.durasi-harga-sub { font-size:12px; color:var(--text-muted); margin-top:2px; }
+.durasi-card.disabled-card { opacity:0.45; cursor:not-allowed; }
+.durasi-label { font-family:'Syne',sans-serif; font-weight:800; font-size:17px; color:var(--text); margin-bottom:3px; }
+.durasi-desc { font-size:12px; color:var(--text-dim); margin-bottom:8px; }
+.durasi-harga { font-family:'Syne',sans-serif; font-weight:700; font-size:20px; color:var(--neon-blue); }
+.durasi-harga-sub { font-size:11px; color:var(--text-muted); margin-top:2px; }
 .durasi-hemat {
-  position:absolute; top:12px; right:12px;
-  background:rgba(0,255,148,0.15); color:var(--neon-green);
+  position:absolute; top:10px; right:10px;
+  background:rgba(0,255,148,0.12); color:var(--neon-green);
   border:1px solid rgba(0,255,148,0.3);
-  padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700;
+  padding:2px 9px; border-radius:20px; font-size:10px; font-weight:700;
 }
-
-/* Kupon */
-.kupon-wrap {
-  display:flex; gap:10px; margin-bottom:12px;
-}
-.kupon-input {
-  flex:1; padding:13px 16px;
-  background:rgba(255,255,255,0.04);
-  border:1.5px solid var(--border); border-radius:10px; outline:none;
-  font-family:'DM Sans',sans-serif; font-size:15px; color:var(--text);
-  text-transform:uppercase; letter-spacing:1px;
-  transition:border-color 0.25s;
-}
-.kupon-input:focus { border-color:rgba(0,212,255,0.4); }
-.btn-kupon {
-  padding:13px 20px;
-  background:rgba(0,212,255,0.1); border:1.5px solid rgba(0,212,255,0.3);
-  border-radius:10px; cursor:pointer;
-  font-family:'Syne',sans-serif; font-weight:700; font-size:14px; color:var(--neon-blue);
-  transition:all 0.2s; white-space:nowrap;
-}
-.btn-kupon:hover { background:rgba(0,212,255,0.2); }
-.kupon-result {
-  padding:12px 16px; border-radius:10px;
-  font-size:13px; display:none; margin-bottom:8px;
-}
-.kupon-result.ok { background:rgba(0,255,148,0.08); border:1px solid rgba(0,255,148,0.25); color:var(--neon-green); }
-.kupon-result.err { background:rgba(255,68,102,0.08); border:1px solid rgba(255,68,102,0.25); color:var(--neon-red); }
 
 /* Ringkasan */
 .ringkasan-box {
-  background:rgba(255,255,255,0.03);
-  border:1px solid var(--border); border-radius:14px;
-  padding:24px; margin-bottom:24px;
+  background:rgba(255,255,255,0.03); border:1px solid var(--border);
+  border-radius:14px; padding:22px; margin-bottom:20px;
 }
 .ringkasan-row {
   display:flex; justify-content:space-between; align-items:center;
-  padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);
-  font-size:14px;
+  padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:13px;
 }
 .ringkasan-row:last-child { border-bottom:none; }
 .ringkasan-key { color:var(--text-dim); }
 .ringkasan-val { color:var(--text); font-weight:500; }
+.ringkasan-val.green { color:var(--neon-green); }
 .ringkasan-total {
   display:flex; justify-content:space-between; align-items:center;
-  padding:16px 0 0; margin-top:8px;
+  padding:14px 0 0; margin-top:6px;
   border-top:2px solid rgba(0,212,255,0.15);
 }
-.ringkasan-total-key { font-family:'Syne',sans-serif; font-weight:700; font-size:16px; color:var(--text); }
-.ringkasan-total-val { font-family:'Syne',sans-serif; font-weight:800; font-size:24px; color:var(--neon-blue); }
-.ringkasan-diskon { color:var(--neon-green); font-size:13px; }
-
-/* User info bar */
-.user-bar {
-  background:rgba(255,255,255,0.03); border:1px solid var(--border);
-  border-radius:10px; padding:12px 16px; margin-bottom:24px;
-  display:flex; gap:20px; flex-wrap:wrap;
-}
-.user-bar-item { display:flex; flex-direction:column; gap:2px; }
-.user-bar-key { font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; }
-.user-bar-val { font-size:13px; color:var(--neon-blue); font-weight:500; }
+.ringkasan-total-key { font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--text); }
+.ringkasan-total-val { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; }
+.ringkasan-total-val.bayar { color:var(--neon-blue); }
+.ringkasan-total-val.gratis { color:var(--neon-green); }
 
 /* Buttons */
-.btn-row { display:flex; justify-content:space-between; align-items:center; margin-top:28px; gap:12px; }
+.btn-row { display:flex; justify-content:space-between; align-items:center; margin-top:24px; gap:12px; }
 .btn-back {
-  padding:12px 24px;
-  background:transparent; border:1.5px solid var(--border);
+  padding:11px 22px; background:transparent; border:1.5px solid var(--border);
   border-radius:10px; cursor:pointer;
-  font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text-dim);
-  transition:all 0.2s; display:flex; align-items:center; gap:8px;
+  font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text-dim);
+  transition:all 0.2s; display:flex; align-items:center; gap:7px;
 }
 .btn-back:hover { border-color:rgba(255,255,255,0.2); color:var(--text); }
 .btn-next {
-  padding:13px 32px;
+  padding:12px 28px;
   background:linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
   border:none; border-radius:10px; cursor:pointer;
-  font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:#fff;
+  font-family:'Syne',sans-serif; font-weight:700; font-size:14px; color:#fff;
   transition:all 0.25s; display:flex; align-items:center; gap:8px;
   box-shadow:0 4px 20px rgba(0,212,255,0.2);
 }
-.btn-next:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,212,255,0.3); }
-.btn-next:disabled { opacity:0.4; pointer-events:none; }
-.btn-bayar {
-  width:100%; padding:16px;
-  background:linear-gradient(135deg, #25D366, #128C7E);
+.btn-next:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,212,255,0.3); }
+.btn-next:disabled { opacity:0.35; pointer-events:none; }
+.btn-action {
+  width:100%; padding:15px;
   border:none; border-radius:12px; cursor:pointer;
-  font-family:'Syne',sans-serif; font-weight:700; font-size:16px; color:#fff;
+  font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:#fff;
   transition:all 0.25s; display:flex; align-items:center; justify-content:center; gap:10px;
-  box-shadow:0 4px 20px rgba(37,211,102,0.25); margin-top:8px;
 }
-.btn-bayar:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(37,211,102,0.35); }
-.btn-bayar:disabled { opacity:0.5; pointer-events:none; }
+.btn-action.bayar {
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  box-shadow:0 4px 20px rgba(37,211,102,0.25);
+}
+.btn-action.bayar:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(37,211,102,0.35); }
+.btn-action.trial {
+  background:linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+  box-shadow:0 4px 20px rgba(0,212,255,0.2);
+}
+.btn-action.trial:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,212,255,0.3); }
+.btn-action:disabled { opacity:0.5; pointer-events:none; }
+
+/* Info box */
+.info-box {
+  padding:12px 14px; border-radius:10px; margin-bottom:16px;
+  background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.15);
+  font-size:12px; color:var(--text-dim); line-height:1.7;
+}
 
 /* Loading */
 .loading-overlay {
@@ -296,34 +327,31 @@ body::before {
 }
 .loading-overlay.show { display:flex; }
 .spinner {
-  width:48px; height:48px; border-radius:50%;
+  width:44px; height:44px; border-radius:50%;
   border:3px solid rgba(0,212,255,0.2); border-top-color:var(--neon-blue);
   animation:spin 0.8s linear infinite;
 }
 @keyframes spin { to{transform:rotate(360deg);} }
 
-/* Error state */
-.error-screen {
-  text-align:center; padding:60px 20px;
-}
-.error-screen .icon { font-size:48px; margin-bottom:16px; }
-.error-screen h2 { font-size:22px; color:var(--neon-red); margin-bottom:10px; }
-.error-screen p { font-size:14px; color:var(--text-dim); line-height:1.7; }
+/* Error */
+.error-screen { text-align:center; padding:48px 16px; }
+.error-screen .icon { font-size:44px; margin-bottom:14px; }
+.error-screen h2 { font-size:20px; color:var(--neon-red); margin-bottom:8px; }
+.error-screen p { font-size:13px; color:var(--text-dim); line-height:1.7; }
 
 /* Responsive */
 @media(max-width:768px){
-  .card { padding:24px 18px; }
+  .card { padding:22px 16px; }
   .step-label { display:none; }
-  .btn-row { flex-direction:column-reverse; gap:10px; }
-  .btn-back, .btn-next { width:100%; justify-content:center; }
+  .btn-row { flex-direction:column-reverse; gap:8px; }
+  .btn-back,.btn-next { width:100%; justify-content:center; }
 }
 @media(max-width:480px){
   .page-wrap { padding:16px 12px 60px; }
-  .card { padding:18px 14px; }
-  .step-title { font-size:18px; }
-  .paket-harga { font-size:20px; }
-  .user-bar { gap:12px; overflow-x:auto; flex-wrap:nowrap; }
+  .card { padding:18px 13px; }
+  .user-bar { overflow-x:auto; flex-wrap:nowrap; gap:14px; }
   .user-bar-item { flex-shrink:0; }
+  .step-title { font-size:17px; }
 }
 </style>
 </head>
@@ -331,7 +359,6 @@ body::before {
 
 <div class="ambient"><span></span><span></span><span></span></div>
 
-<!-- Loading overlay -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
   <p style="color:var(--text-dim);font-size:14px;" id="loadingText">Memproses...</p>
@@ -346,56 +373,68 @@ body::before {
   </div>
 
   <div class="progress-track">
-    <div class="progress-fill" id="progressFill" style="width:20%"></div>
+    <div class="progress-fill" id="progressFill"></div>
   </div>
 
-  <div class="step-indicator" id="stepIndicator">
-    <div class="step-item active" id="si1">
-      <div class="step-dot active" id="sd1">1</div>
-      <span class="step-label">Tipe Paket</span>
-    </div>
+  <div class="step-indicator">
+    <div class="step-item active" id="si1"><div class="step-dot active" id="sd1">1</div><span class="step-label">Kupon</span></div>
     <div class="step-line" id="sl1"></div>
-    <div class="step-item" id="si2">
-      <div class="step-dot" id="sd2">2</div>
-      <span class="step-label">Kapasitas</span>
-    </div>
+    <div class="step-item" id="si2"><div class="step-dot" id="sd2">2</div><span class="step-label">Paket</span></div>
     <div class="step-line" id="sl2"></div>
-    <div class="step-item" id="si3">
-      <div class="step-dot" id="sd3">3</div>
-      <span class="step-label">Durasi</span>
-    </div>
+    <div class="step-item" id="si3"><div class="step-dot" id="sd3">3</div><span class="step-label">Server</span></div>
     <div class="step-line" id="sl3"></div>
-    <div class="step-item" id="si4">
-      <div class="step-dot" id="sd4">4</div>
-      <span class="step-label">Kupon</span>
-    </div>
+    <div class="step-item" id="si4"><div class="step-dot" id="sd4">4</div><span class="step-label">Durasi</span></div>
     <div class="step-line" id="sl4"></div>
-    <div class="step-item" id="si5">
-      <div class="step-dot" id="sd5">5</div>
-      <span class="step-label">Ringkasan</span>
-    </div>
+    <div class="step-item" id="si5"><div class="step-dot" id="sd5">5</div><span class="step-label">Ringkasan</span></div>
   </div>
 
-  <div class="card" id="mainCard">
+  <div class="card">
 
-    <!-- ERROR STATE -->
+    <!-- ERROR -->
     <div class="step-panel active" id="stepError">
       <div class="error-screen">
         <div class="icon">⚠️</div>
         <h2>Link tidak valid</h2>
         <p id="errorMsg">Memuat data pendaftaran...</p>
-        <a href="/" style="display:inline-block;margin-top:20px;color:var(--neon-blue);font-size:14px;">← Daftar ulang dari awal</a>
+        <a href="/" style="display:inline-block;margin-top:18px;color:var(--neon-blue);font-size:13px;">← Daftar ulang dari awal</a>
       </div>
     </div>
 
-    <!-- STEP 1: TIPE PAKET -->
+    <!-- STEP 1: KUPON -->
     <div class="step-panel" id="step1">
-      <div class="user-bar" id="userBar"></div>
-      <h2 class="step-title">Pilih tipe paket Anda</h2>
-      <p class="step-sub">Semua paket sudah termasuk fitur toko online lengkap. Perbedaannya ada di pilihan template yang tersedia.</p>
+      <div class="user-bar" id="userBar1"></div>
+      <h2 class="step-title">Punya kode kupon?</h2>
+      <p class="step-sub">Masukkan kode kupon sebelum memilih paket. Kalau tidak punya, langsung klik Lanjut.</p>
+
+      <div class="kupon-box">
+        <h3>🎟️ Kode Kupon / Promo</h3>
+        <p>Kupon akan menentukan pilihan paket yang tersedia untuk Anda.</p>
+        <div class="kupon-row">
+          <input class="kupon-input" type="text" id="kuponInput" placeholder="Contoh: COBA3HARI"
+            oninput="this.value=this.value.toUpperCase(); resetKupon()">
+          <button class="btn-kupon" id="btnTerapkan" onclick="validasiKupon()">Terapkan</button>
+        </div>
+        <div class="kupon-result" id="kuponResult"></div>
+      </div>
+
+      <div class="btn-row" style="justify-content:flex-end; margin-top:16px;">
+        <button class="btn-next" onclick="goStep(2)">
+          Lanjut — Pilih Paket
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2: TIPE PAKET -->
+    <div class="step-panel" id="step2">
+      <div class="user-bar" id="userBar2"></div>
+      <h2 class="step-title">Pilih tipe paket</h2>
+      <p class="step-sub">Perbedaannya ada di pilihan template yang tersedia.</p>
+
+      <div class="kupon-hint" id="kuponHint2"></div>
 
       <div class="paket-grid">
-        <div class="paket-card" data-paket="elegant" onclick="pilihPaket(this)">
+        <div class="paket-card" data-paket="elegant" id="card-elegant" onclick="pilihPaket(this)">
           <div class="paket-badge badge-blue">Populer</div>
           <div class="paket-icon">✨</div>
           <div class="paket-nama blue">Elegant</div>
@@ -408,12 +447,11 @@ body::before {
             <div class="paket-fitur-item">Magic link edit via WhatsApp</div>
           </div>
         </div>
-
-        <div class="paket-card" data-paket="futuristic" onclick="pilihPaket(this)">
+        <div class="paket-card" data-paket="futuristic" id="card-futuristic" onclick="pilihPaket(this)">
           <div class="paket-badge badge-gold">Premium</div>
           <div class="paket-icon">🚀</div>
           <div class="paket-nama gold">Futuristic</div>
-          <div class="paket-desc">Semua template Elegant + template premium eksklusif. Tampil lebih berkesan dan tak terlupakan.</div>
+          <div class="paket-desc">Semua template Elegant + template premium eksklusif. Tampil lebih berkesan.</div>
           <div class="paket-harga">Rp97.000 <span>/ bulan</span></div>
           <div class="paket-fitur">
             <div class="paket-fitur-item">Semua fitur Elegant</div>
@@ -424,67 +462,79 @@ body::before {
         </div>
       </div>
 
-      <div class="btn-row" style="justify-content:flex-end">
-        <button class="btn-next" id="btnNext1" onclick="goStep(2)" disabled>
-          Lanjut — Pilih Kapasitas
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <div class="kupon-warning" id="kuponWarning2"></div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(1)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Kembali
+        </button>
+        <button class="btn-next" id="btnNext2" onclick="goStep(3)" disabled>
+          Lanjut — Pilih Server
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- STEP 2: SERVER OPTION -->
-    <div class="step-panel" id="step2">
-      <div class="user-bar" id="userBar2"></div>
+    <!-- STEP 3: SERVER -->
+    <div class="step-panel" id="step3">
+      <div class="user-bar" id="userBar3"></div>
       <h2 class="step-title">Pilih kapasitas server</h2>
-      <p class="step-sub">Pilih sesuai kebutuhan trafik toko Anda. Bisa upgrade kapanpun tanpa kehilangan data.</p>
+      <p class="step-sub">Bisa upgrade kapanpun tanpa kehilangan data.</p>
+
+      <div class="kupon-hint" id="kuponHint3"></div>
 
       <div class="server-grid">
-        <div class="server-card" data-server="startup" onclick="pilihServer(this)">
+        <div class="server-card" data-server="startup" id="card-startup" onclick="pilihServer(this)">
           <div class="server-icon">🌱</div>
           <div class="server-nama">Startup</div>
-          <div class="server-desc">Untuk toko yang baru mulai. Cocok untuk trafik ringan hingga menengah.</div>
+          <div class="server-desc">Untuk toko yang baru mulai. Trafik ringan hingga menengah.</div>
           <div class="server-tambahan gratis">+ Rp0 / bulan</div>
         </div>
-        <div class="server-card" data-server="unicorn" onclick="pilihServer(this)">
+        <div class="server-card" data-server="unicorn" id="card-unicorn" onclick="pilihServer(this)">
           <div class="server-icon">🦄</div>
           <div class="server-nama">Unicorn</div>
-          <div class="server-desc">Untuk toko yang sering pasang iklan. Siap hadapi lonjakan trafik mendadak.</div>
+          <div class="server-desc">Sering pasang iklan. Siap hadapi lonjakan trafik mendadak.</div>
           <div class="server-tambahan berbayar">+ Rp100.000 / bulan</div>
         </div>
-        <div class="server-card" data-server="phoenix" onclick="pilihServer(this)">
+        <div class="server-card" data-server="phoenix" id="card-phoenix" onclick="pilihServer(this)">
           <div class="server-icon">🔥</div>
           <div class="server-nama">Phoenix</div>
-          <div class="server-desc">VPS dedicated. Untuk toko dengan trafik tinggi dan konsisten setiap hari.</div>
+          <div class="server-desc">VPS dedicated. Trafik tinggi dan konsisten setiap hari.</div>
           <div class="server-tambahan berbayar">+ Rp300.000 / bulan</div>
         </div>
       </div>
 
+      <div class="kupon-warning" id="kuponWarning3"></div>
+
       <div class="btn-row">
-        <button class="btn-back" onclick="goStep(1)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <button class="btn-back" onclick="goStep(2)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           Kembali
         </button>
-        <button class="btn-next" id="btnNext2" onclick="goStep(3)" disabled>
+        <button class="btn-next" id="btnNext3" onclick="goStep(4)" disabled>
           Lanjut — Pilih Durasi
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- STEP 3: DURASI -->
-    <div class="step-panel" id="step3">
-      <div class="user-bar" id="userBar3"></div>
+    <!-- STEP 4: DURASI -->
+    <div class="step-panel" id="step4">
+      <div class="user-bar" id="userBar4"></div>
       <h2 class="step-title">Pilih durasi berlangganan</h2>
-      <p class="step-sub">Berlangganan 1 tahun dan dapatkan bonus 2 bulan gratis — total 14 bulan!</p>
+      <p class="step-sub">1 tahun = 14 bulan — bonus 2 bulan gratis!</p>
+
+      <div class="kupon-hint" id="kuponHint4"></div>
 
       <div class="durasi-grid">
-        <div class="durasi-card" data-durasi="3bulan" onclick="pilihDurasi(this)">
+        <div class="durasi-card" data-durasi="3bulan" id="card-3bulan" onclick="pilihDurasi(this)">
           <div class="durasi-label">3 Bulan</div>
           <div class="durasi-desc">Cocok untuk mencoba dulu</div>
           <div class="durasi-harga" id="harga3bulan">Rp0</div>
-          <div class="durasi-harga-sub" id="perbulan3">Rp0 / bulan</div>
+          <div class="durasi-harga-sub" id="perbulan3bulan">Rp0 / bulan</div>
         </div>
-        <div class="durasi-card" data-durasi="1tahun" onclick="pilihDurasi(this)">
+        <div class="durasi-card" data-durasi="1tahun" id="card-1tahun" onclick="pilihDurasi(this)">
           <div class="durasi-hemat">Hemat 2 bulan!</div>
           <div class="durasi-label">1 Tahun</div>
           <div class="durasi-desc">14 bulan harga 12 bulan</div>
@@ -493,39 +543,16 @@ body::before {
         </div>
       </div>
 
-      <div class="btn-row">
-        <button class="btn-back" onclick="goStep(2)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          Kembali
-        </button>
-        <button class="btn-next" id="btnNext3" onclick="goStep(4)" disabled>
-          Lanjut — Kode Kupon
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- STEP 4: KUPON -->
-    <div class="step-panel" id="step4">
-      <div class="user-bar" id="userBar4"></div>
-      <h2 class="step-title">Kode kupon</h2>
-      <p class="step-sub">Punya kode kupon atau promo? Masukkan di sini. Langsung lewati jika tidak ada.</p>
-
-      <div class="kupon-wrap">
-        <input class="kupon-input" type="text" id="kuponInput" placeholder="Contoh: COBA3HARI"
-          oninput="this.value=this.value.toUpperCase(); resetKupon()">
-        <button class="btn-kupon" onclick="validasiKupon()">Terapkan</button>
-      </div>
-      <div class="kupon-result" id="kuponResult"></div>
+      <div class="kupon-warning" id="kuponWarning4"></div>
 
       <div class="btn-row">
         <button class="btn-back" onclick="goStep(3)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           Kembali
         </button>
-        <button class="btn-next" onclick="goStep(5)">
+        <button class="btn-next" id="btnNext4" onclick="goStep(5)" disabled>
           Lanjut — Ringkasan
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
@@ -533,36 +560,21 @@ body::before {
     <!-- STEP 5: RINGKASAN -->
     <div class="step-panel" id="step5">
       <h2 class="step-title">Ringkasan pesanan</h2>
-      <p class="step-sub">Periksa kembali sebelum melanjutkan ke pembayaran.</p>
+      <p class="step-sub">Periksa kembali sebelum melanjutkan.</p>
 
       <div class="ringkasan-box">
-        <div class="ringkasan-row">
-          <span class="ringkasan-key">Nama</span>
-          <span class="ringkasan-val" id="r_nama">—</span>
-        </div>
-        <div class="ringkasan-row">
-          <span class="ringkasan-key">Subdomain</span>
-          <span class="ringkasan-val" id="r_subdomain">—</span>
-        </div>
-        <div class="ringkasan-row">
-          <span class="ringkasan-key">Tipe Paket</span>
-          <span class="ringkasan-val" id="r_tipe">—</span>
-        </div>
-        <div class="ringkasan-row">
-          <span class="ringkasan-key">Kapasitas Server</span>
-          <span class="ringkasan-val" id="r_server">—</span>
-        </div>
-        <div class="ringkasan-row">
-          <span class="ringkasan-key">Durasi</span>
-          <span class="ringkasan-val" id="r_durasi">—</span>
-        </div>
+        <div class="ringkasan-row"><span class="ringkasan-key">Nama</span><span class="ringkasan-val" id="r_nama">—</span></div>
+        <div class="ringkasan-row"><span class="ringkasan-key">Subdomain</span><span class="ringkasan-val" id="r_subdomain">—</span></div>
+        <div class="ringkasan-row"><span class="ringkasan-key">Tipe Paket</span><span class="ringkasan-val" id="r_tipe">—</span></div>
+        <div class="ringkasan-row"><span class="ringkasan-key">Kapasitas Server</span><span class="ringkasan-val" id="r_server">—</span></div>
+        <div class="ringkasan-row"><span class="ringkasan-key">Durasi</span><span class="ringkasan-val" id="r_durasi">—</span></div>
         <div class="ringkasan-row" id="r_kupon_row" style="display:none">
           <span class="ringkasan-key">Kupon</span>
-          <span class="ringkasan-val ringkasan-diskon" id="r_kupon">—</span>
+          <span class="ringkasan-val green" id="r_kupon">—</span>
         </div>
         <div class="ringkasan-row" id="r_diskon_row" style="display:none">
           <span class="ringkasan-key">Potongan</span>
-          <span class="ringkasan-val ringkasan-diskon" id="r_diskon">—</span>
+          <span class="ringkasan-val green" id="r_diskon">—</span>
         </div>
         <div class="ringkasan-total">
           <span class="ringkasan-total-key">Total Bayar</span>
@@ -570,82 +582,67 @@ body::before {
         </div>
       </div>
 
-      <div style="padding:14px 16px; background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.15); border-radius:10px; margin-bottom:20px;">
-        <p style="font-size:13px; color:var(--text-dim); line-height:1.7;">
-          💳 Anda akan diarahkan ke halaman pembayaran Mayar yang aman. Mendukung transfer bank, QRIS, dan semua metode pembayaran utama.
-        </p>
+      <div class="info-box" id="r_info_box">
+        💳 Anda akan diarahkan ke halaman pembayaran Mayar yang aman. Mendukung transfer bank, QRIS, dan semua metode pembayaran utama.
       </div>
 
-      <button class="btn-bayar" id="btnBayar" onclick="prosesCheckout()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      <button class="btn-action" id="btnAction" onclick="prosesCheckout()">
         Konfirmasi & Bayar Sekarang
       </button>
 
-      <div class="btn-row" style="margin-top:16px">
+      <div class="btn-row" style="margin-top:14px;">
         <button class="btn-back" onclick="goStep(4)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           Ubah pilihan
         </button>
       </div>
     </div>
 
-  </div><!-- end .card -->
+  </div>
 
-  <p style="margin-top:28px; font-size:12px; color:var(--text-muted); text-align:center; line-height:1.8;">
+  <p style="margin-top:24px; font-size:11px; color:var(--text-muted); text-align:center; line-height:1.8;">
     © 2025 TokoSaya · <a href="#" style="color:var(--neon-blue);text-decoration:none;">Privasi</a> · <a href="#" style="color:var(--neon-blue);text-decoration:none;">Bantuan</a>
   </p>
 </div>
 
 <script>
 const API_URL = 'https://api.chanceupme.com';
-
 const HARGA = { elegant: 49000, futuristic: 97000 };
 const HARGA_SERVER = { startup: 0, unicorn: 100000, phoenix: 300000 };
 const DURASI_BULAN = { '3bulan': 3, '1tahun': 14 };
 const LABEL = {
-  tipe: { elegant: 'Elegant', futuristic: 'Futuristic' },
-  server: { startup: 'Startup', unicorn: 'Unicorn', phoenix: 'Phoenix' },
+  tipe: { elegant: 'Elegant ✨', futuristic: 'Futuristic 🚀' },
+  server: { startup: 'Startup 🌱', unicorn: 'Unicorn 🦄', phoenix: 'Phoenix 🔥' },
   durasi: { '3bulan': '3 Bulan', '1tahun': '1 Tahun (14 bulan)' },
 };
 
 const state = {
   pendaftaranId: null,
   userData: null,
+  kupon: null,
+  benefit: null,
+  kuponSyarat: null, // syarat yang sudah diparsing
   tipe: null,
   server: null,
   durasi: null,
-  kupon: null,
-  benefit: null,
-  totalAsli: 0,
-  totalBayar: 0,
 };
 
-// ── Init ──
+// ── INIT ──
 window.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
-
-  if (!id) {
-    showError('Link pendaftaran tidak valid. Silakan daftar dari awal.');
-    return;
-  }
-
+  if (!id) { showError('Link pendaftaran tidak valid.'); return; }
   state.pendaftaranId = id;
 
   try {
     const res = await fetch(`${API_URL}/sesi2/info?id=${id}`);
     const data = await res.json();
-
-    if (!data.success) {
-      showError(data.error || 'Pendaftaran tidak ditemukan.');
-      return;
-    }
-
+    if (!data.success) { showError(data.error || 'Pendaftaran tidak ditemukan.'); return; }
     state.userData = data.data;
-    renderUserBar();
+    renderUserBars();
     goStep(1);
   } catch(e) {
-    showError('Gagal terhubung ke server. Periksa koneksi internet Anda.');
+    showError('Gagal terhubung ke server.');
   }
 });
 
@@ -655,153 +652,302 @@ function showError(msg) {
   document.getElementById('stepError').classList.add('active');
 }
 
-function formatRp(n) {
-  return 'Rp' + n.toLocaleString('id-ID');
+function formatRp(n) { return 'Rp' + n.toLocaleString('id-ID'); }
+
+function hitungTotal() {
+  if (!state.tipe || !state.server || !state.durasi) return 0;
+  const perBulan = (HARGA[state.tipe] || 0) + (HARGA_SERVER[state.server] || 0);
+  return perBulan * (DURASI_BULAN[state.durasi] || 3);
 }
 
-function hitungHarga(tipe, server, durasi) {
-  const perBulan = (HARGA[tipe] || 0) + (HARGA_SERVER[server] || 0);
-  const bulan = DURASI_BULAN[durasi] || 3;
-  return perBulan * bulan;
-}
-
-// ── Render user info bar ──
-function renderUserBar() {
+function renderUserBars() {
   const u = state.userData;
   const html = `
     <div class="user-bar-item"><span class="user-bar-key">Nama</span><span class="user-bar-val">${u.nama}</span></div>
     <div class="user-bar-item"><span class="user-bar-key">Email</span><span class="user-bar-val">${u.email}</span></div>
     <div class="user-bar-item"><span class="user-bar-key">Subdomain</span><span class="user-bar-val">${u.subdomain}.tokosaya.id</span></div>
   `;
-  ['userBar','userBar2','userBar3','userBar4'].forEach(id => {
+  ['userBar1','userBar2','userBar3','userBar4'].forEach(id => {
     const el = document.getElementById(id);
-    if(el) el.innerHTML = html;
+    if (el) el.innerHTML = html;
   });
 }
 
-// ── Step navigation ──
+// ── STEP NAVIGATION ──
 function goStep(n) {
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
   const panel = document.getElementById('step' + n);
   if (panel) panel.classList.add('active');
 
-  // Step indicator
-  for(let i=1; i<=5; i++){
-    const si = document.getElementById('si'+i);
-    const sd = document.getElementById('sd'+i);
-    if(!si||!sd) continue;
+  for (let i = 1; i <= 5; i++) {
+    const si = document.getElementById('si' + i);
+    const sd = document.getElementById('sd' + i);
+    if (!si || !sd) continue;
     si.className = 'step-item';
     sd.className = 'step-dot';
-    if(i < n){ si.classList.add('done'); sd.classList.add('done'); sd.textContent=''; }
-    else if(i === n){ si.classList.add('active'); sd.classList.add('active'); sd.textContent=i; }
-    else { sd.textContent=i; }
-    if(i<5){
-      const sl = document.getElementById('sl'+i);
-      if(sl) sl.className = 'step-line' + (i<n?' done':'');
+    if (i < n) { si.classList.add('done'); sd.classList.add('done'); sd.textContent = ''; }
+    else if (i === n) { si.classList.add('active'); sd.classList.add('active'); sd.textContent = i; }
+    else { sd.textContent = i; }
+    if (i < 5) {
+      const sl = document.getElementById('sl' + i);
+      if (sl) sl.className = 'step-line' + (i < n ? ' done' : '');
     }
   }
 
-  const pct = {1:20, 2:40, 3:60, 4:80, 5:100};
-  document.getElementById('progressFill').style.width = (pct[n]||20) + '%';
+  const pct = { 1: 10, 2: 30, 3: 50, 4: 70, 5: 100 };
+  document.getElementById('progressFill').style.width = (pct[n] || 10) + '%';
 
-  // Update harga di step durasi
-  if (n === 3 && state.tipe && state.server) updateHargaDurasi();
+  if (n === 2) renderKuponHint(2);
+  if (n === 3) { updateHargaDurasi(); renderKuponHint(3); }
+  if (n === 4) { updateHargaDurasi(); renderKuponHint(4); }
+  if (n === 5) renderRingkasan();
 
-  // Update ringkasan di step 5
-  if (n === 5) updateRingkasan();
-
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── Step 1: Pilih paket ──
-function pilihPaket(el) {
-  document.querySelectorAll('.paket-card').forEach(c => {
-    c.classList.remove('selected','selected-gold');
-  });
-  const paket = el.dataset.paket;
-  el.classList.add(paket === 'futuristic' ? 'selected-gold' : 'selected');
-  state.tipe = paket;
-  document.getElementById('btnNext1').disabled = false;
-}
-
-// ── Step 2: Pilih server ──
-function pilihServer(el) {
-  document.querySelectorAll('.server-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  state.server = el.dataset.server;
-  document.getElementById('btnNext2').disabled = false;
-}
-
-// ── Step 3: Pilih durasi ──
-function updateHargaDurasi() {
-  const h3 = hitungHarga(state.tipe, state.server, '3bulan');
-  const h1 = hitungHarga(state.tipe, state.server, '1tahun');
-  document.getElementById('harga3bulan').textContent = formatRp(h3);
-  document.getElementById('perbulan3').textContent = formatRp(h3/3) + ' / bulan';
-  document.getElementById('harga1tahun').textContent = formatRp(h1);
-  document.getElementById('perbulan1tahun').textContent = formatRp(Math.round(h1/14)) + ' / bulan efektif';
-}
-
-function pilihDurasi(el) {
-  document.querySelectorAll('.durasi-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  state.durasi = el.dataset.durasi;
-  state.kupon = null;
-  state.benefit = null;
-  document.getElementById('btnNext3').disabled = false;
-}
-
-// ── Step 4: Kupon ──
+// ── KUPON ──
 function resetKupon() {
   state.kupon = null;
   state.benefit = null;
+  state.kuponSyarat = null;
   const r = document.getElementById('kuponResult');
   r.style.display = 'none';
   r.className = 'kupon-result';
+  document.getElementById('kuponInput').className = 'kupon-input';
 }
 
 async function validasiKupon() {
   const kode = document.getElementById('kuponInput').value.trim();
   if (!kode) return;
 
+  const btn = document.getElementById('btnTerapkan');
+  btn.disabled = true;
+  btn.textContent = '...';
+
   const r = document.getElementById('kuponResult');
 
+  try {
+    // Kirim dengan tipe/server/durasi dummy dulu — kita cuma mau tahu info kupon
+    const res = await fetch(`${API_URL}/sesi2/kupon/validasi`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kode, tipe: 'elegant', server: 'startup', durasi: '3bulan' })
+    });
+    const data = await res.json();
+
+    if (data.success || (data.kupon)) {
+      // Kupon valid — simpan info dan syarat
+      state.kupon = data.kupon;
+      state.benefit = data.benefit;
+
+      // Parse syarat dari backend untuk validasi realtime di step 2-4
+      state.kuponSyarat = parseSyarat(data.kupon);
+
+      document.getElementById('kuponInput').className = 'kupon-input valid';
+      r.className = 'kupon-result ok';
+      r.style.display = 'block';
+      r.innerHTML = renderKuponInfo(data.kupon, data.benefit, state.kuponSyarat);
+    } else {
+      document.getElementById('kuponInput').className = 'kupon-input invalid';
+      r.className = 'kupon-result err';
+      r.style.display = 'block';
+      r.innerHTML = `<div class="kupon-result-title">❌ Kupon tidak valid</div>
+        <div class="kupon-syarat">${data.error || 'Kode kupon tidak ditemukan atau sudah tidak aktif.'}</div>`;
+    }
+  } catch(e) {
+    r.className = 'kupon-result err';
+    r.style.display = 'block';
+    r.innerHTML = `<div class="kupon-result-title">❌ Gagal terhubung</div>
+      <div class="kupon-syarat">Periksa koneksi internet Anda.</div>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Terapkan';
+}
+
+function parseSyarat(kupon) {
+  // Parsing syarat dari data kupon untuk digunakan validasi realtime
+  if (!kupon) return null;
+  const s = { tipe: null, server: null, durasi_bulan: null };
+
+  // Cek langsung dari field syarat_tipe & syarat_nilai yang dikirim backend
+  // Kita pakai pendekatan: minta backend satu kali dengan pilihan spesifik dan lihat apakah valid
+  // Tapi untuk hint, kita pakai deskripsi kupon yang sudah ada
+  return s; // Simplified — hint ditampilkan dari deskripsi
+}
+
+function renderKuponInfo(kupon, benefit, syarat) {
+  let html = `<div class="kupon-result-title">🎉 ${benefit?.label || 'Kupon berhasil diterapkan!'}</div>`;
+  html += `<div class="kupon-syarat">`;
+  if (kupon.deskripsi) html += `<p style="margin-bottom:8px;color:var(--text-dim)">${kupon.deskripsi}</p>`;
+  html += `<p style="color:var(--text-dim);font-weight:600;margin-bottom:4px;">Berlaku untuk pilihan:</p>`;
+  html += `<ul style="padding-left:16px;color:var(--text-dim);">`;
+  html += `<li>Paket Elegant & Futuristic</li>`;
+  html += `<li>Server Startup</li>`;
+  html += `<li>Durasi 3 Bulan atau 1 Tahun</li>`;
+  html += `</ul></div>`;
+  return html;
+}
+
+// ── KUPON HINT di step 2,3,4 ──
+function renderKuponHint(step) {
+  const hintId = 'kuponHint' + step;
+  const el = document.getElementById(hintId);
+  if (!el) return;
+
+  if (state.kupon) {
+    el.className = 'kupon-hint show';
+    el.innerHTML = `🎟️ Kupon <strong>${state.kupon.kode}</strong> aktif — ${state.benefit?.label || ''}. Pilih sesuai syarat kupon agar berlaku.`;
+  } else {
+    el.className = 'kupon-hint';
+  }
+}
+
+// ── CEK APAKAH PILIHAN SESUAI KUPON ──
+// Untuk kupon COBA3HARI yang syaratnya server=startup
+// Kita validasi realtime dengan minta backend
+async function cekKuponRealtimeServer(server) {
+  if (!state.kupon) return true; // tidak ada kupon, semua boleh
   try {
     const res = await fetch(`${API_URL}/sesi2/kupon/validasi`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        kode,
-        tipe: state.tipe,
-        server: state.server,
-        durasi: state.durasi,
+        kode: state.kupon.kode,
+        tipe: state.tipe || 'elegant',
+        server: server,
+        durasi: state.durasi || '3bulan'
       })
     });
     const data = await res.json();
-
-    if (data.success) {
-      state.kupon = data.kupon;
-      state.benefit = data.benefit;
-      state.totalAsli = data.total_asli;
-      state.totalBayar = data.total_bayar;
-
-      r.className = 'kupon-result ok';
-      r.textContent = '✅ ' + data.benefit.label + (data.benefit.potongan_nominal > 0 ? ' — Hemat ' + formatRp(data.benefit.potongan_nominal) : '');
-      r.style.display = 'block';
-    } else {
-      r.className = 'kupon-result err';
-      r.textContent = '❌ ' + (data.error || 'Kupon tidak valid');
-      r.style.display = 'block';
-    }
-  } catch(e) {
-    r.className = 'kupon-result err';
-    r.textContent = '❌ Gagal terhubung ke server.';
-    r.style.display = 'block';
-  }
+    return { ok: data.success, pesan: data.error };
+  } catch(e) { return { ok: true }; }
 }
 
-// ── Step 5: Ringkasan ──
-function updateRingkasan() {
+async function cekKuponRealtimeTipe(tipe) {
+  if (!state.kupon) return { ok: true };
+  try {
+    const res = await fetch(`${API_URL}/sesi2/kupon/validasi`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        kode: state.kupon.kode,
+        tipe: tipe,
+        server: state.server || 'startup',
+        durasi: state.durasi || '3bulan'
+      })
+    });
+    const data = await res.json();
+    return { ok: data.success, pesan: data.error };
+  } catch(e) { return { ok: true }; }
+}
+
+async function cekKuponRealtimeDurasi(durasi) {
+  if (!state.kupon) return { ok: true };
+  try {
+    const res = await fetch(`${API_URL}/sesi2/kupon/validasi`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        kode: state.kupon.kode,
+        tipe: state.tipe || 'elegant',
+        server: state.server || 'startup',
+        durasi: durasi
+      })
+    });
+    const data = await res.json();
+    return { ok: data.success, pesan: data.error };
+  } catch(e) { return { ok: true }; }
+}
+
+// ── STEP 2: PILIH PAKET ──
+async function pilihPaket(el) {
+  if (el.classList.contains('disabled-card')) return;
+  const tipe = el.dataset.paket;
+
+  if (state.kupon) {
+    const cek = await cekKuponRealtimeTipe(tipe);
+    const warning = document.getElementById('kuponWarning2');
+    if (!cek.ok) {
+      warning.className = 'kupon-warning show';
+      warning.textContent = `⚠️ ${cek.pesan || 'Kupon tidak berlaku untuk pilihan ini.'}`;
+      document.getElementById('btnNext2').disabled = true;
+      return;
+    } else {
+      warning.className = 'kupon-warning';
+    }
+  }
+
+  document.querySelectorAll('.paket-card').forEach(c => c.classList.remove('selected','selected-gold'));
+  el.classList.add(tipe === 'futuristic' ? 'selected-gold' : 'selected');
+  state.tipe = tipe;
+  document.getElementById('btnNext2').disabled = false;
+  document.getElementById('kuponWarning2').className = 'kupon-warning';
+}
+
+// ── STEP 3: PILIH SERVER ──
+async function pilihServer(el) {
+  if (el.classList.contains('disabled-card')) return;
+  const server = el.dataset.server;
+
+  if (state.kupon) {
+    const cek = await cekKuponRealtimeServer(server);
+    const warning = document.getElementById('kuponWarning3');
+    if (!cek.ok) {
+      warning.className = 'kupon-warning show';
+      warning.innerHTML = `⚠️ ${cek.pesan || 'Kupon tidak berlaku untuk pilihan ini.'}<br><small style="opacity:0.8">Ubah pilihan agar kupon <strong>${state.kupon.kode}</strong> tetap berlaku.</small>`;
+      document.getElementById('btnNext3').disabled = true;
+      return;
+    } else {
+      warning.className = 'kupon-warning';
+    }
+  }
+
+  document.querySelectorAll('.server-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  state.server = server;
+  document.getElementById('btnNext3').disabled = false;
+  document.getElementById('kuponWarning3').className = 'kupon-warning';
+}
+
+// ── STEP 4: PILIH DURASI ──
+function updateHargaDurasi() {
+  if (!state.tipe || !state.server) return;
+  const perBulan = (HARGA[state.tipe] || 0) + (HARGA_SERVER[state.server] || 0);
+  const h3 = perBulan * 3;
+  const h1 = perBulan * 14;
+  document.getElementById('harga3bulan').textContent = formatRp(h3);
+  document.getElementById('perbulan3bulan').textContent = formatRp(perBulan) + ' / bulan';
+  document.getElementById('harga1tahun').textContent = formatRp(h1);
+  document.getElementById('perbulan1tahun').textContent = formatRp(Math.round(h1/14)) + ' / bulan efektif';
+}
+
+async function pilihDurasi(el) {
+  if (el.classList.contains('disabled-card')) return;
+  const durasi = el.dataset.durasi;
+
+  if (state.kupon) {
+    const cek = await cekKuponRealtimeDurasi(durasi);
+    const warning = document.getElementById('kuponWarning4');
+    if (!cek.ok) {
+      warning.className = 'kupon-warning show';
+      warning.innerHTML = `⚠️ ${cek.pesan || 'Kupon tidak berlaku untuk durasi ini.'}<br><small style="opacity:0.8">Ubah pilihan agar kupon <strong>${state.kupon.kode}</strong> tetap berlaku.</small>`;
+      document.getElementById('btnNext4').disabled = true;
+      return;
+    } else {
+      warning.className = 'kupon-warning';
+    }
+  }
+
+  document.querySelectorAll('.durasi-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  state.durasi = durasi;
+  document.getElementById('btnNext4').disabled = false;
+  document.getElementById('kuponWarning4').className = 'kupon-warning';
+}
+
+// ── STEP 5: RINGKASAN ──
+function renderRingkasan() {
   const u = state.userData;
   document.getElementById('r_nama').textContent = u.nama;
   document.getElementById('r_subdomain').textContent = u.subdomain + '.tokosaya.id';
@@ -809,30 +955,47 @@ function updateRingkasan() {
   document.getElementById('r_server').textContent = LABEL.server[state.server] || state.server;
   document.getElementById('r_durasi').textContent = LABEL.durasi[state.durasi] || state.durasi;
 
-  const total = state.totalBayar || hitungHarga(state.tipe, state.server, state.durasi);
-  const asli = state.totalAsli || total;
+  const totalAsli = hitungTotal();
+  const isTrial = state.kupon?.tipe === 'trial_hari';
+  const potongan = state.benefit?.potongan_nominal || 0;
+  const totalBayar = isTrial ? 0 : Math.max(0, totalAsli - potongan);
 
   if (state.kupon) {
     document.getElementById('r_kupon_row').style.display = '';
     document.getElementById('r_kupon').textContent = state.kupon.kode + ' — ' + state.benefit.label;
-    if (state.benefit.potongan_nominal > 0) {
+    if (potongan > 0) {
       document.getElementById('r_diskon_row').style.display = '';
-      document.getElementById('r_diskon').textContent = '- ' + formatRp(state.benefit.potongan_nominal);
+      document.getElementById('r_diskon').textContent = '- ' + formatRp(potongan);
     }
   } else {
     document.getElementById('r_kupon_row').style.display = 'none';
     document.getElementById('r_diskon_row').style.display = 'none';
   }
 
-  document.getElementById('r_total').textContent = formatRp(total);
+  const totalEl = document.getElementById('r_total');
+  const infoBox = document.getElementById('r_info_box');
+  const btnAction = document.getElementById('btnAction');
+
+  if (isTrial || totalBayar === 0) {
+    totalEl.textContent = 'Rp0 — GRATIS';
+    totalEl.className = 'ringkasan-total-val gratis';
+    infoBox.innerHTML = '🎁 Kupon trial Anda berhasil diterapkan. Klik tombol di bawah untuk mengaktifkan toko gratis selama ' + state.kupon.nilai + ' hari.';
+    btnAction.className = 'btn-action trial';
+    btnAction.innerHTML = '🚀 Aktifkan Trial Gratis ' + state.kupon.nilai + ' Hari';
+  } else {
+    totalEl.textContent = formatRp(totalBayar);
+    totalEl.className = 'ringkasan-total-val bayar';
+    infoBox.innerHTML = '💳 Anda akan diarahkan ke halaman pembayaran Mayar yang aman. Mendukung transfer bank, QRIS, dan semua metode pembayaran utama.';
+    btnAction.className = 'btn-action bayar';
+    btnAction.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Konfirmasi & Bayar Sekarang';
+  }
 }
 
-// ── Checkout ──
+// ── CHECKOUT ──
 async function prosesCheckout() {
-  const btn = document.getElementById('btnBayar');
+  const btn = document.getElementById('btnAction');
   btn.disabled = true;
-
-  showLoading('Membuat invoice pembayaran...');
+  showLoading('Memproses pesanan Anda...');
 
   try {
     const res = await fetch(`${API_URL}/sesi2/buat-invoice`, {
@@ -857,16 +1020,13 @@ async function prosesCheckout() {
     }
 
     if (data.tipe === 'trial') {
-      // Kupon trial — langsung redirect ke sukses
       window.location.href = data.redirect;
     } else {
-      // Redirect ke halaman bayar Mayar
       window.location.href = data.link;
     }
-
   } catch(e) {
     hideLoading();
-    alert('Gagal terhubung ke server. Periksa koneksi internet Anda.');
+    alert('Gagal terhubung ke server. Periksa koneksi Anda.');
     btn.disabled = false;
   }
 }
