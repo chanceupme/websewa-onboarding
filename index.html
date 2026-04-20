@@ -1326,6 +1326,7 @@ async function sendOTP() {
 
   updateWALink();
   startCountdown();
+  startPolling(); // ← tambah ini
 }
 
 function updateWALink() {
@@ -1457,6 +1458,7 @@ async function resendOTP() {
   document.getElementById('timerCount').style.color = 'var(--neon-orange)';
   updateWALink();
   startCountdown();
+  startPolling(); // ← tambah ini
   showOTPState('idle');
   // Flash animasi kode baru
   const el = document.getElementById('otpDisplay');
