@@ -836,13 +836,13 @@ body::before {
       </div>
 
       <h2 class="step-title">Pilih alamat toko Anda</h2>
-      <p class="step-sub">Ini akan menjadi URL toko Anda: <span id="previewUrl">namatoko.tokosaya.id</span></p>
+      <p class="step-sub">Ini akan menjadi URL toko Anda: <span id="previewUrl">namatoko.webruang.com</span></p>
 
       <div class="subdomain-wrap" id="subdomainWrap">
         <input class="subdomain-input" id="subdomainInput" type="text"
           placeholder="namatoko" maxlength="30"
           oninput="onSubdomainInput(this.value)">
-        <div class="subdomain-suffix">.tokosaya.id</div>
+        <div class="subdomain-suffix">.webruang.com</div>
       </div>
 
       <div class="subdomain-status hint" id="subdomainStatus">
@@ -1104,7 +1104,7 @@ const state = {
 
 // Nomor WA sistem kita (demo)
 const WA_SYSTEM_NUMBER = '6282241731144';
-const API_URL = 'https://api.chanceupme.com';
+const API_URL = 'https://api.webruang.com';
 
 // ═══════════════════════════════════
 //  STEP NAVIGATION
@@ -1143,11 +1143,11 @@ function goStep(n) {
   }
   if(n>=3){
     document.getElementById('s2_template').textContent = state.templateName || '—';
-    document.getElementById('s2_subdomain').textContent = (state.subdomain||'—') + '.tokosaya.id';
+    document.getElementById('s2_subdomain').textContent = (state.subdomain||'—') + '.webruang.com';
   }
   if(n>=4){
     document.getElementById('s3_template').textContent = state.templateName || '—';
-    document.getElementById('s3_subdomain').textContent = (state.subdomain||'—') + '.tokosaya.id';
+    document.getElementById('s3_subdomain').textContent = (state.subdomain||'—') + '.webruang.com';
     const phoneFormatted = '+62' + state.phone;
     document.getElementById('s3_phone').textContent = phoneFormatted;
     document.getElementById('displayPhone').textContent = phoneFormatted;
@@ -1192,7 +1192,7 @@ function onSubdomainInput(val) {
   const previewUrl = document.getElementById('previewUrl');
   const btnNext = document.getElementById('btnNext2');
 
-  previewUrl.textContent = (val||'namatoko') + '.tokosaya.id';
+  previewUrl.textContent = (val||'namatoko') + '.webruang.com';
 
   // Clear prev timer
   if(state.subdomainTimer) clearTimeout(state.subdomainTimer);
@@ -1231,7 +1231,7 @@ function onSubdomainInput(val) {
       if (data.tersedia) {
         wrap.className = 'subdomain-wrap valid';
         status.className = 'subdomain-status available';
-        status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>.tokosaya.id" tersedia! ✓';
+        status.innerHTML = '<div class="status-dot"></div> "<strong>' + val + '</strong>.webruang.com" tersedia! ✓';
         state.subdomain = val;
         btnNext.disabled = false;
       } else {
@@ -1403,7 +1403,7 @@ function startPolling() {
       showOTPState('success');
       // Redirect ke Sesi 2 setelah 2.5 detik (biar user sempat lihat pesan sukses)
       setTimeout(() => {
-        window.location.href = 'https://daftar.chanceupme.com/sesi2?id=' + state.pendaftaranId;
+        window.location.href = 'https://daftar.webruang.com/sesi2?id=' + state.pendaftaranId;
       }, 2500);
     }
   }, 3000);
