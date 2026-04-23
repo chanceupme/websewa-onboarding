@@ -259,7 +259,7 @@ tr:hover td { background:rgba(255,255,255,0.02); }
 </div>
 
 <script>
-const API_URL = 'https://api.chanceupme.com';
+const API_URL = 'https://api.webruang.com';
 const templateNames = { '1':'Neon Dark','2':'Fresh Green','3':'Bold Red','4':'Royal Purple','5':'Ocean Blue','6':'Golden Hour' };
 const HARGA = { elegant: 49000, futuristic: 97000 };
 const HARGA_SERVER = { startup: 0, unicorn: 100000, phoenix: 300000 };
@@ -377,7 +377,7 @@ function renderTable(data) {
         <div style="font-size:11px;color:var(--text-muted);margin-top:2px">${r.email}</div>
         <div class="td-phone" style="margin-top:2px">${formatPhone(r.phone)}</div>
       </td>
-      <td class="td-subdomain">${r.subdomain}.tokosaya.id</td>
+      <td class="td-subdomain">${r.subdomain}.webruang.com</td>
       <td>${renderStatus(r)}</td>
       <td>${paketInfo}</td>
       <td style="font-size:11px">${durasiStr}</td>
@@ -415,7 +415,7 @@ function filterTable(q) {
 function konfirmasiDelete(id, nama, subdomain) {
   deleteTargetId = id;
   document.getElementById('deleteModalMsg').innerHTML =
-    `Apakah Anda yakin ingin menghapus data:<br><strong>${nama}</strong> (${subdomain}.tokosaya.id)?<br><br>
+    `Apakah Anda yakin ingin menghapus data:<br><strong>${nama}</strong> (${subdomain}.webruang.com)?<br><br>
     <span style="color:var(--neon-red);font-size:12px">⚠️ Tindakan ini tidak dapat dibatalkan.</span>`;
   document.getElementById('deleteModal').classList.add('open');
 }
