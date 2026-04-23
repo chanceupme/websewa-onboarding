@@ -673,7 +673,7 @@ body::before {
 </div>
 
 <script>
-const API_URL = 'https://api.chanceupme.com';
+const API_URL = 'https://api.webruang.com';
 const HARGA = { elegant: 49000, futuristic: 97000 };
 const HARGA_SERVER = { startup: 0, unicorn: 100000, phoenix: 300000 };
 const DURASI_BULAN = { '3bulan': 3, '1tahun': 14 };
@@ -732,7 +732,7 @@ function renderUserBars() {
   const html = `
     <div class="user-bar-item"><span class="user-bar-key">Nama</span><span class="user-bar-val">${u.nama}</span></div>
     <div class="user-bar-item"><span class="user-bar-key">Email</span><span class="user-bar-val">${u.email}</span></div>
-    <div class="user-bar-item"><span class="user-bar-key">Subdomain</span><span class="user-bar-val">${u.subdomain}.tokosaya.id</span></div>
+    <div class="user-bar-item"><span class="user-bar-key">Subdomain</span><span class="user-bar-val">${u.subdomain}.webruang.com</span></div>
   `;
   ['userBar1','userBar2','userBar3','userBar4'].forEach(id => {
     const el = document.getElementById(id);
@@ -1017,7 +1017,7 @@ async function pilihDurasi(el) {
 function renderRingkasan() {
   const u = state.userData;
   document.getElementById('r_nama').textContent = u.nama;
-  document.getElementById('r_subdomain').textContent = u.subdomain + '.tokosaya.id';
+  document.getElementById('r_subdomain').textContent = u.subdomain + '.webruang.com';
   document.getElementById('r_tipe').textContent = LABEL.tipe[state.tipe] || state.tipe;
   document.getElementById('r_server').textContent = LABEL.server[state.server] || state.server;
   document.getElementById('r_durasi').textContent = LABEL.durasi[state.durasi] || state.durasi;
